@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MyLanka.lk | Sri Lanka's No 1 Marketplace</title>
+<link rel="icon" href="Logo.jpg">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-[#f5f5f5] min-h-screen flex flex-col">
+<div id="splash" class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center"><img src="Logo.jpg" onerror="this.src='https://via.placeholder.com/150?text=MyLanka'" class="w-[85%] max-w-[380px]"><p class="mt-6 text-[13px] text-gray-400 tracking-widest">SRI LANKA'S #1 MARKETPLACE</p><div class="mt-8 w-8 h-8 border-4 border-green-600 border-t-transparent rounded-full animate-spin"></div></div>
+
+<header class="bg-white sticky top-0 z-40 shadow"><div class="max-w-[1440px] mx-auto px-3 h-[60px] flex items-center gap-2"><img src="Logo.jpg" onerror="this.src='https://via.placeholder.com/80?text=ML'" class="h-[32px]"><div class="flex-1 hidden md:flex ml-4"><input id="searchInput" placeholder="🔍 Search MyLanka.lk" class="w-full border-2 border-green-600 rounded-full px-5 py-2 text-[13px] outline-none" oninput="doSearch(this.value)"></div><div class="ml-auto flex gap-2 items-center"><button onclick="openPostModal()" class="bg-orange-500 text-white px-5 h-[36px] rounded-full font-bold text-[12px]">+ SELL</button><button onclick="openCart()" class="relative p-2"><i class="fa fa-shopping-cart text-[18px]"></i><span id="cartCount" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-[18px] h-[18px] rounded-full grid place-items-center">0</span></button><button id="loginBtn" onclick="openLogin()" class="bg-black text-white px-4 h-[36px] rounded-full text-[12px]">Login</button></div></div>
+<div class="bg-white border-y"><div class="max-w-[1440px] mx-auto px-3 h-[44px] flex items-center gap-2 text-[12px] overflow-x-auto" id="catBar"><button onclick="filterCat('all')" class="cat-btn bg-green-600 text-white px-4 py-1.5 rounded-full">All</button><button onclick="filterCat('vehicles')" class="cat-btn px-3 py-1">Vehicles</button><button onclick="filterCat('property')" class="cat-btn px-3 py-1">Property</button><button onclick="filterCat('electronics')" class="cat-btn px-3 py-1">Electronics</button><button onclick="filterCat('fashion')" class="cat-btn px-3 py-1">Fashion</button></div></div></header>
+
+<div class="md:hidden p-3 bg-white"><input id="searchInput2" placeholder="🔍 Search" class="w-full border-2 border-green-600 rounded-full px-4 py-2.5 text-[13px] outline-none" oninput="doSearch(this.value)"></div>
+
+<div class="flex-1 max-w-[1440px] w-full mx-auto px-3 pb-6 pt-4"><h2 class="font-bold mb-3 flex justify-between text-[13px]">Fresh Recommendations - <span id="resultCount">0 Ads</span> <span class="text-[10px] text-gray-400 font-normal">← Swipe to change →</span></h2><div id="grid" class="grid grid-cols-2 md:grid-cols-4 gap-3 touch-pan-y"></div></div>
+
+<!-- DETAIL MODAL WITH DELETE -->
+<div id="detailModal" class="fixed inset-0 bg-white z-[80] hidden overflow-y-auto"><div class="max-w-[1000px] mx-auto"><div class="p-3 border-b flex justify-between items-center sticky top-0 bg-white z-10"><button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full"><i class="fa fa-arrow-left"></i></button><button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full">X</button></div><div class="md:grid md:grid-cols-2"><div><img id="dImage" class="w-full h-[380px] object-cover bg-gray-100"><div id="dMoreImgs" class="flex gap-2 p-3 overflow-x-auto"></div></div><div class="p-4"><h1 id="dTitle" class="text-[19px] font-bold"></h1><p id="dPrice" class="text-[24px] font-black text-green-700 mt-2"></p><p id="dLocation" class="text-[12px] text-gray-500 mt-1"></p><div id="dPhoneBox" class="mt-4 bg-green-50 border border-green-200 rounded-xl p-3 hidden"><p class="text-[11px] text-gray-500">📞 Contact Seller</p><a id="dPhone" href="#" class="text-[16px] font-black text-green-700 block mt-1"></a><div class="grid grid-cols-2 gap-2 mt-3"><a id="dCallBtn" href="#" class="h-[42px] bg-green-600 text-white rounded-full grid place-items-center font-bold text-[13px]">Call Now</a><a id="dWhatsappBtn" href="#" target="_blank" class="h-[42px] bg-[#25D366] text-white rounded-full grid place-items-center font-bold text-[13px]">WhatsApp</a></div></div><p id="dDesc" class="text-[13px] text-gray-600 mt-4 bg-gray-50 p-3 rounded-xl"></p><div class="grid grid-cols-2 gap-3 mt-6"><button id="dCartBtn" class="h-[48px] bg-orange-500 text-white rounded-full font-bold text-[13px]">🛒 Add to Cart</button><button id="dBuyBtn" class="h-[48px] bg-green-600 text-white rounded-full font-bold text-[13px]">⚡ Buy Now</button></div>
+<!-- DELETE BUTTON - OWNER ONLY -->
+<button id="deleteBtn" onclick="deleteMyAd()" class="hidden w-full mt-3 h-[44px] bg-red-50 text-red-600 border-2 border-red-200 rounded-full font-bold text-[13px]">🗑️ Delete My Ad</button>
+<p id="ownerNote" class="hidden text-[11px] text-green-600 text-center mt-2">This is your ad - you can delete it</p>
+</div></div></div></div>
+
+<div id="postModal" class="fixed inset-0 bg-black/60 z-[90] hidden items-center justify-center p-3"><div class="bg-white w-full max-w-[500px] rounded-2xl max-h-[90vh] overflow-y-auto"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-bold">Post Ad - 3 Photos</h3><button onclick="closePostModal()" class="w-8 h-8 bg-gray-100 rounded-full">X</button></div><div class="p-4 space-y-3"><select id="pCategory" class="w-full border-2 p-3 rounded-xl text-[13px] outline-none bg-gray-50"><option value="vehicles">🚗 Vehicles</option><option value="property">🏠 Property</option><option value="electronics">📱 Electronics</option><option value="fashion">👕 Fashion</option></select><input id="pTitle" placeholder="Title *" class="w-full border-2 p-3 rounded-xl text-[13px] outline-none"><input id="pPrice" type="number" placeholder="Price Rs *" class="w-full border-2 p-3 rounded-xl text-[13px] outline-none"><input id="pLocation" placeholder="Location *" class="w-full border-2 p-3 rounded-xl text-[13px] outline-none"><input id="pPhone" type="tel" placeholder="Phone 07XXXXXXXX" class="w-full border-2 border-green-500 p-3 rounded-xl text-[13px] outline-none bg-green-50"><textarea id="pDesc" placeholder="Description" class="w-full border-2 p-3 rounded-xl text-[13px] h-[80px] outline-none"></textarea>
+<div class="border-2 border-dashed border-green-300 rounded-2xl p-4 text-center bg-green-50/50"><input id="pImages" type="file" accept="image/*" multiple hidden><button type="button" onclick="document.getElementById('pImages').click()" class="w-full h-[48px] bg-white border-2 border-green-600 text-green-700 rounded-xl font-bold text-[13px] flex items-center justify-center gap-2"><i class="fa fa-camera"></i> Choose Files - 3 Photos at Once</button><p class="text-[10px] text-gray-500 mt-2">Tap to select 3 photos together</p><div id="imgPreview" class="grid grid-cols-3 gap-2 mt-3 hidden"></div><p id="imgCount" class="text-[11px] text-green-600 font-bold mt-2 hidden"></p><button type="button" id="clearImgBtn" onclick="clearImages()" class="hidden mt-2 text-[11px] text-red-500 underline">Clear Photos</button></div>
+<button onclick="submitAd()" id="submitBtn" class="w-full h-[48px] bg-green-600 text-white font-bold rounded-xl">✅ Post Ad - Free</button><p id="postError" class="text-[11px] text-red-500 text-center"></p></div></div></div>
+
+<div id="cartModal" class="fixed inset-0 bg-black/60 z-[90] hidden"><div class="bg-white w-full max-w-[400px] h-full ml-auto flex flex-col"><div class="p-4 border-b flex justify-between"><h3 class="font-bold">Cart (<span id="cartCount2">0</span>)</h3><button onclick="closeCart()" class="w-8 h-8 bg-gray-100 rounded-full">X</button></div><div id="cartItems" class="flex-1 overflow-y-auto p-4"></div><div class="border-t p-4 bg-gray-50"><div class="flex justify-between font-bold"><span>Subtotal</span><span id="cartSubtotal">Rs.0</span></div><button onclick="checkout()" class="w-full mt-3 h-[48px] bg-orange-500 text-white font-bold rounded-xl">Checkout</button></div></div></div>
+
+<div id="loginModal" class="fixed inset-0 bg-white z-[90] hidden flex-col items-center justify-center p-6"><div class="w-full max-w-[360px] text-center"><img src="Logo.jpg" class="w-20 h-20 mx-auto rounded-full mb-4"><h2 class="font-bold text-[18px]">Login to MyLanka.lk</h2><button onclick="googleLogin()" class="w-full mt-6 h-[48px] border-2 rounded-xl text-[13px] flex items-center justify-center gap-2 font-bold"><img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5">Continue with Google</button><p id="error" class="text-xs text-red-500 mt-3"></p><button onclick="closeLogin()" class="mt-6 text-[12px] text-gray-400 underline">Close</button></div></div>
+
+<footer class="bg-white border-t p-4 text-center mt-auto"><p class="text-[13px] font-bold text-gray-700">MyLanka.lk © 2026</p></footer>
+
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+import {getFirestore,collection,addDoc,query,orderBy,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyBCTh5NJgnhcXec_FMfpvFOuccBLxpHfxQ",authDomain:"mylanka-lk.firebaseapp.com",projectId:"mylanka-lk",storageBucket:"mylanka-lk.firebasestorage.app",messagingSenderId:"403802424795",appId:"1:403802424795:web:6736366578096ff129d3fe"};
+const app=initializeApp(cfg);const auth=getAuth(app);const db=getFirestore(app);
+let allProducts=[],cart=[],currentFilter='all',currentSearch='',currentDeleteId=null;
+const cats = ['all','vehicles','property','electronics','fashion'];
+let selectedFiles = [];
+setTimeout(()=>{const s=document.getElementById('splash');if(s)s.style.display='none';},1800);
+onAuthStateChanged(auth,u=>{if(u){document.getElementById('loginBtn').innerText=(u.displayName||'Account').split(' ')[0];closeLogin();}});
+const q=query(collection(db,"products"),orderBy("createdAt","desc"));
+onSnapshot(q,snap=>{allProducts=snap.docs.map(d=>({id:d.id,...d.data()}));renderProducts();});
+function esc(s){return (s||'').toString().replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function renderProducts(){let list=[...allProducts];if(currentFilter!=='all')list=list.filter(p=>p.category===currentFilter);if(currentSearch)list=list.filter(p=>`${p.title} ${p.location} ${p.category} ${p.description||''}`.toLowerCase().includes(currentSearch));document.getElementById('resultCount').innerText=list.length+' Ads';const grid=document.getElementById('grid');if(list.length===0){grid.innerHTML=`<div class="col-span-2 md:col-span-4 text-center py-12 bg-white rounded-2xl border"><p class="text-[14px] font-bold">No Ads Found</p></div>`;return;}grid.innerHTML=list.map(p=>`<div onclick="openDetail('${p.id}')" class="bg-white rounded-2xl overflow-hidden border hover:shadow-lg transition cursor-pointer"><img src="${p.image}" loading="lazy" class="h-[160px] w-full object-cover bg-gray-100"><div class="p-3"><p class="text-[12px] font-bold line-clamp-2 h-[34px]">${esc(p.title)}</p><p class="text-[15px] font-black text-green-700 mt-1">Rs.${Number(p.price).toLocaleString()}</p><p class="text-[10px] text-gray-400 mt-1">📍 ${esc(p.location||'')} • ${esc(p.category)}</p></div></div>`).join('');}
+function updateCatUI(cat){const btns=document.querySelectorAll('.cat-btn');btns.forEach(b=>{const txt=b.textContent.toLowerCase().trim();if(txt===cat)b.className='cat-btn bg-green-600 text-white px-4 py-1.5 rounded-full';else b.className='cat-btn px-3 py-1';});const activeBtn=Array.from(btns).find(b=>b.textContent.toLowerCase().trim()===cat);if(activeBtn)activeBtn.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});}
+window.filterCat=(c)=>{currentFilter=c;updateCatUI(c);renderProducts();};
+let startX=0,startY=0;const gridEl=document.getElementById('grid');gridEl.addEventListener('touchstart', e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY;},{passive:true});gridEl.addEventListener('touchend', e=>{let endX=e.changedTouches[0].clientX;let endY=e.changedTouches[0].clientY;let diffX=endX-startX;let diffY=endY-startY;if(Math.abs(diffX)<80)return;if(Math.abs(diffY)>100)return;let idx=cats.indexOf(currentFilter);if(diffX<0)idx=Math.min(idx+1,cats.length-1);else idx=Math.max(idx-1,0);if(cats[idx]!==currentFilter){currentFilter=cats[idx];updateCatUI(cats[idx]);renderProducts();gridEl.animate([{transform:'translateX('+(diffX>0?'-12px':'12px')+')'}, {transform:'translateX(0)'}], {duration:180});}},{passive:true});
+window.doSearch=(v)=>{currentSearch=v.toLowerCase().trim();renderProducts();};
+const pImagesInput=document.getElementById('pImages');const previewEl=document.getElementById('imgPreview');const countEl=document.getElementById('imgCount');const clearBtn=document.getElementById('clearImgBtn');pImagesInput.addEventListener('change',(e)=>{let files=Array.from(e.target.files);if(files.length>3){alert('Max 3 Photos only!');files=files.slice(0,3);}selectedFiles=files;showPreview();});function showPreview(){if(selectedFiles.length===0){previewEl.classList.add('hidden');countEl.classList.add('hidden');clearBtn.classList.add('hidden');return;}previewEl.innerHTML='';selectedFiles.forEach((file,i)=>{const url=URL.createObjectURL(file);previewEl.innerHTML+=`<div class="relative"><img src="${url}" class="w-full h-[80px] object-cover rounded-xl border-2 border-green-200"><span class="absolute top-0 right-0 bg-green-600 text-white text-[9px] px-1 rounded-bl">${i+1}</span></div>`;});previewEl.classList.remove('hidden');countEl.innerText=selectedFiles.length+' Photos selected ✅';countEl.classList.remove('hidden');clearBtn.classList.remove('hidden');}
+window.clearImages=()=>{selectedFiles=[];pImagesInput.value='';previewEl.classList.add('hidden');countEl.classList.add('hidden');clearBtn.classList.add('hidden');previewEl.innerHTML='';};
+
+window.openDetail=(id)=>{let p=allProducts.find(x=>x.id===id);if(!p)return;document.getElementById('dImage').src=p.image;document.getElementById('dTitle').innerText=p.title;document.getElementById('dPrice').innerText='Rs. '+Number(p.price).toLocaleString();document.getElementById('dLocation').innerText='📍 '+(p.location||'')+' • '+(p.category||'');document.getElementById('dDesc').innerText=p.description||p.title;
+if(p.phone){document.getElementById('dPhoneBox').classList.remove('hidden');document.getElementById('dPhone').innerText=p.phone;document.getElementById('dCallBtn').href='tel:'+p.phone;document.getElementById('dWhatsappBtn').href='https://wa.me/94'+p.phone.slice(-9)+'?text=Hi! MyLanka.lk ad: '+encodeURIComponent(p.title);}else{document.getElementById('dPhoneBox').classList.add('hidden');}
+let more=document.getElementById('dMoreImgs');more.innerHTML='';if(p.images&&p.images.length>0){more.innerHTML=p.images.map(img=>`<img src="${img}" class="w-[70px] h-[70px] rounded-xl object-cover border-2 cursor-pointer" onclick="document.getElementById('dImage').src='${img}'">`).join('');}
+document.getElementById('dCartBtn').onclick=()=>{addToCart(p.id,p.title,p.price,p.image);};
+document.getElementById('dBuyBtn').onclick=()=>{addToCart(p.id,p.title,p.price,p.image);closeDetail();openCart();};
+// OWNER DELETE CHECK
+currentDeleteId = p.id;
+const delBtn = document.getElementById('deleteBtn');
+const ownerNote = document.getElementById('ownerNote');
+if(auth.currentUser && p.user === auth.currentUser.uid){
+  delBtn.classList.remove('hidden');
+  ownerNote.classList.remove('hidden');
+}else{
+  delBtn.classList.add('hidden');
+  ownerNote.classList.add('hidden');
+}
+document.getElementById('detailModal').classList.remove('hidden');};
+
+window.deleteMyAd = async()=>{
+  if(!currentDeleteId) return;
+  if(!confirm('මේ Ad එක මකන්නද? Are you sure?')) return;
+  try{
+    await deleteDoc(doc(db,"products", currentDeleteId));
+    alert('Deleted! මැකුවා');
+    closeDetail();
+  }catch(e){ alert('Error: '+e.message); }
+};
+
+window.closeDetail=()=>document.getElementById('detailModal').classList.add('hidden');
+window.addToCart=(id,title,price,image)=>{let it=cart.find(i=>i.id===id);if(it)it.qty++;else cart.push({id,title,price,image,qty:1});updateCart();openCart();};
+window.updateCart=()=>{document.getElementById('cartCount').innerText=cart.reduce((s,i)=>s+i.qty,0);document.getElementById('cartCount2').innerText=cart.reduce((s,i)=>s+i.qty,0);let t=cart.reduce((s,i)=>s+i.price*i.qty,0);document.getElementById('cartSubtotal').innerText='Rs.'+t.toLocaleString();document.getElementById('cartItems').innerHTML=cart.length===0?'<p class="text-center text-gray-400 text-[12px] mt-10">Cart empty</p>':cart.map(i=>`<div class="flex gap-3 border-b pb-3 mb-3"><img src="${i.image}" class="w-[60px] h-[60px] rounded-xl object-cover"><div class="flex-1"><p class="text-[12px] font-bold">${esc(i.title)}</p><p class="text-[12px] text-green-700 font-bold">Rs.${Number(i.price).toLocaleString()} x ${i.qty}</p></div></div>`).join('');};
+window.openCart=()=>document.getElementById('cartModal').classList.remove('hidden');window.closeCart=()=>document.getElementById('cartModal').classList.add('hidden');window.checkout=()=>{if(cart.length===0){alert('Cart empty!');return;}alert('Order Placed!');cart=[];updateCart();closeCart();};
+window.openPostModal=()=>{if(!auth.currentUser){openLogin();return;}document.getElementById('postModal').classList.remove('hidden');document.getElementById('postModal').classList.add('flex');};window.closePostModal=()=>{document.getElementById('postModal').classList.add('hidden');document.getElementById('postModal').classList.remove('flex');};
+window.submitAd=async()=>{
+  try{
+    const title=document.getElementById('pTitle').value.trim();const price=document.getElementById('pPrice').value;const loc=document.getElementById('pLocation').value.trim();const phone=document.getElementById('pPhone').value.trim();const cat=document.getElementById('pCategory').value;const desc=document.getElementById('pDesc').value.trim();
+    if(!title||!price||!loc||!phone){document.getElementById('postError').innerText='Fill all fields!';return;}
+    if(!/^0[0-9]{9}$/.test(phone)){document.getElementById('postError').innerText='Phone වැරදියි! 07XXXXXXXX';return;}
+    if(selectedFiles.length===0){document.getElementById('postError').innerText='Choose at least 1 photo!';return;}
+    const btn=document.getElementById('submitBtn');btn.innerText='Posting...';btn.disabled=true;
+    const toResized = (file)=>new Promise((res,rej)=>{const url=URL.createObjectURL(file);const img=new Image();img.onload=()=>{const canvas=document.createElement('canvas');let w=img.width,h=img.height;if(w>800){h=h*800/w;w=800;}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);URL.revokeObjectURL(url);res(canvas.toDataURL('image/jpeg',0.6));};img.onerror=()=>{URL.revokeObjectURL(url);rej(new Error('Image error'));};img.src=url;});
+    let images=[];for(let f of selectedFiles){images.push(await toResized(f));}
+    await addDoc(collection(db,"products"),{title,price:Number(price),location:loc,phone,category:cat,description:desc,image:images[0],images,createdAt:Date.now(),user:auth.currentUser.uid});
+    alert('Posted! '+images.length+' Photos');closePostModal();clearImages();btn.innerText='✅ Post Ad - Free';btn.disabled=false;
+    document.getElementById('pTitle').value='';document.getElementById('pPrice').value='';document.getElementById('pLocation').value='';document.getElementById('pPhone').value='';document.getElementById('pDesc').value='';
+  }catch(e){document.getElementById('postError').innerText=e.message;document.getElementById('submitBtn').innerText='✅ Post Ad - Free';document.getElementById('submitBtn').disabled=false;}
+};
+window.openLogin=()=>{document.getElementById('loginModal').classList.remove('hidden');document.getElementById('loginModal').classList.add('flex');};
+window.closeLogin=()=>{document.getElementById('loginModal').classList.add('hidden');document.getElementById('loginModal').classList.remove('flex');};
+window.googleLogin=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider());closeLogin();}catch(e){document.getElementById('error').innerText=e.message;}};
+</script>
+</body>
+</html>

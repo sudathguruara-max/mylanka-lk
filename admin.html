@@ -1,0 +1,24 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>MyLanka.lk - Admin</title><script src="https://cdn.tailwindcss.com"></script><script src="https://cdn.jsdelivr.net/npm/chart.js"></script></head><body class="bg-gray-100 p-4">
+<h1 class="text-[20px] font-black">MyLanka.lk - Admin 📊</h1><p class="text-[11px] text-gray-500">Only For Owner - Thenul</p>
+<div class="grid grid-cols-2 gap-3 mt-4"><div class="bg-white p-4 rounded-xl"><p class="text-[11px] text-gray-400">Total Ads</p><p id="totalAds" class="text-[24px] font-black">0</p></div><div class="bg-white p-4 rounded-xl"><p class="text-[11px] text-gray-400">Total Value</p><p id="totalValue" class="text-[18px] font-black">Rs.0</p></div></div>
+<div class="bg-white p-4 rounded-xl mt-4"><canvas id="catChart"></canvas></div>
+<div class="bg-white p-4 rounded-xl mt-4"><canvas id="priceChart"></canvas></div>
+<div id="list" class="bg-white p-4 rounded-xl mt-4 text-[11px]"></div>
+<script type="module">
+import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import {getFirestore,collection,query,orderBy,onSnapshot} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+const cfg={apiKey:"AIzaSyBCTh5NJgnhcXec_FMfpvFOuccBLxpHfxQ",authDomain:"mylanka-lk.firebaseapp.com",projectId:"mylanka-lk",storageBucket:"mylanka-lk.firebasestorage.app",messagingSenderId:"403802424795",appId:"1:403802424795:web:6736366578096ff129d3fe"};
+const app=initializeApp(cfg);const db=getFirestore(app);
+let catChartInst=null, priceChartInst=null;
+onSnapshot(query(collection(db,"products"),orderBy("createdAt","desc")),snap=>{
+  const data=snap.docs.map(d=>d.data());
+  document.getElementById('totalAds').innerText=data.length;
+  document.getElementById('totalValue').innerText='Rs.'+data.reduce((s,i)=>s+(Number(i.price)||0),0).toLocaleString();
+  const cats={};data.forEach(d=>{cats[d.category||'Other']=(cats[d.category||'Other']||0)+1});
+  if(catChartInst)catChartInst.destroy();
+  if(priceChartInst)priceChartInst.destroy();
+  catChartInst=new Chart(document.getElementById('catChart'),{type:'doughnut',data:{labels:Object.keys(cats),datasets:[{data:Object.values(cats),backgroundColor:['#16a34a','#f97316','#2563eb','#db2777','#a855f7']}]},options:{plugins:{title:{display:true,text:'Ads By Category'}}}});
+  priceChartInst=new Chart(document.getElementById('priceChart'),{type:'bar',data:{labels:data.slice(0,5).map(d=>d.title.substring(0,15)),datasets:[{label:'Price Rs.',data:data.slice(0,5).map(d=>d.price),backgroundColor:'#16a34a'}]}});
+  document.getElementById('list').innerHTML=data.map(d=>`<div class="border-b py-2 flex justify-between"><span>${d.title}</span><span class="font-bold">Rs.${Number(d.price).toLocaleString()}</span></div>`).join('');
+});
+</script></body></html>
