@@ -1,286 +1,138 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="si">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>MyLanka.lk</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MyLanka.lk - Sri Lanka's Marketplace</title>
 <style>
-*{font-family:system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
-body{background:#fff;margin:0;overflow-x:hidden}
-.premium-card{border-radius:14px;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.08);border:1px solid #f0f0f0;overflow:hidden;flex-shrink:0;width:160px;min-width:160px;transition:transform.1s}
-.premium-card:active{transform:scale(.97)}
-.cat-btn.active.cat-icon{background:#ff6a00!important;color:white;transform:scale(1.12);box-shadow:0 4px 12px rgba(255,106,0,.4)}
-.cat-btn.active span{color:#ff6a00;font-weight:900}
-.cat-icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:22px;transition:all.2s}
-@keyframes logoDrop{0%{transform:translateY(-350px) scale(.3);opacity:0}60%{transform:translateY(15px) scale(1.1);opacity:1}80%{transform:translateY(-8px) scale(.95)}100%{transform:translateY(0) scale(1);opacity:1}}
-.logo-drop{animation:logoDrop 1.2s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes fadeOut{to{opacity:0;visibility:hidden}}
-.splash-hide{animation:fadeOut.5s ease 2.2s forwards}
-.hide-scrollbar::-webkit-scrollbar{display:none}
-.swipe-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 16px 12px;scroll-behavior:smooth}
-.swipe-row::-webkit-scrollbar{display:none}
-#grid{transition:transform.2s}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
+body{background:#f5f5f5}
+.header{background:#fff;padding:12px 15px;position:sticky;top:0;z-index:100;box-shadow:0 1px 5px rgba(0,0,0,.1)}
+.logo{font-size:28px;font-weight:800;color:#000}.logo span{color:#ff6a00}
+.search-box{background:#f0f2f5;border-radius:25px;display:flex;align-items:center;padding:12px 18px;margin-top:12px}
+.search-box input{border:none;background:transparent;width:100%;outline:none;font-size:15px;margin-left:10px}
+.banner-wrap{margin:15px;border-radius:20px;overflow:hidden;position:relative;height:170px;background:#000}
+.banner-slide{position:absolute;width:100%;height:100%;display:none;align-items:center;padding:20px;color:#fff;background:linear-gradient(135deg,#ff8c00 0%,#ffbe0b 100%)}
+.banner-slide.active{display:flex;animation:fade.5s}
+.banner-slide img{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:1}
+.banner-overlay{position:absolute;top:0;left:0;width:100%;height:100%;background:linear-gradient(90deg,rgba(0,0,0,.6) 0%,rgba(0,0,0,.1) 100%);z-index:2}
+.banner-text{position:relative;z-index:3}
+.banner-text h2{font-size:22px;font-weight:800;line-height:1.2}
+.banner-text button{margin-top:12px;background:#fff;color:#d35400;border:none;padding:8px 18px;border-radius:20px;font-weight:700}
+.dots{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:6px;z-index:4}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}.dot.active{background:#fff;width:20px;border-radius:10px}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.categories{padding:15px}.cat-title{font-size:18px;font-weight:700}
+.cat-list{display:flex;gap:12px;overflow-x:auto;margin-top:12px;padding-bottom:5px}.cat-list::-webkit-scrollbar{display:none}
+.cat-item{text-align:center;min-width:65px;cursor:pointer}
+.cat-icon{width:60px;height:60px;background:#fff;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:28px;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.cat-item.active.cat-icon{border:2px solid #ff6a00}.cat-item.active p{color:#ff6a00;font-weight:700}
+.cat-item p{font-size:13px;margin-top:6px}
+.products{padding:0 15px 90px}.sec-title{font-size:18px;font-weight:700;margin-bottom:12px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 8px rgba(0,0,0,.06);cursor:pointer}
+.card-img{height:140px;background:#eee}.card-img img{width:100%;height:100%;object-fit:cover}
+.card-body{padding:10px}.card-title{font-size:13px;font-weight:600;height:34px;overflow:hidden}.card-price{color:#ff6a00;font-weight:800;margin-top:6px;font-size:14px}
+.add-btn{position:fixed;bottom:25px;right:20px;width:60px;height:60px;background:#ff6a00;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;box-shadow:0 4px 15px rgba(255,106,0,.4);cursor:pointer;z-index:90;border:none}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:200;display:none;overflow-y:auto}.modal.active{display:block}
+.modal-header{display:flex;justify-content:space-between;align-items:center;padding:12px 15px;background:#fff;border-bottom:1px solid #eee;position:sticky;top:0}
+.modal-img{width:100%;height:300px;background:#f0f0f0}.modal-img img{width:100%;height:100%;object-fit:contain}
+.modal-content{padding:15px}.price{font-size:22px;font-weight:800;color:#ff6a00}.title{font-size:16px;font-weight:700;margin:8px 0}.loc{color:#777;font-size:13px}.desc-title{font-weight:700;margin-top:18px}.desc{margin-top:6px;color:#444;font-size:14px;line-height:1.5}
+.seller-box{margin-top:20px;padding-top:15px;border-top:1px solid #eee}.seller-phone{font-size:18px;font-weight:800;margin-top:5px}
+.action-row{display:flex;gap:10px;margin-top:18px}.btn-call{flex:1;background:#00a884;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700}.btn-wa{flex:1;background:#25d366;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700}
+.x-btn{width:36px;height:36px;border-radius:50%;background:#f0f0f0;display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;font-size:18px}
 </style>
 </head>
 <body>
-<div id="splash" class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center">
-<img src="Logo.jpg" class="w-[300px] max-w-[80vw] logo-drop object-contain">
-<div class="mt-6 w-7 h-7 border-[3px] border-[#ff6a00] border-t-transparent rounded-full animate-spin"></div>
+<div class="header">
+<div class="logo">MyLanka<span>.lk</span></div>
+<div class="search-box">🔍<input type="text" placeholder="Search bikes, cars..." id="searchInput"></div>
 </div>
-<div id="loginSplash" class="fixed inset-0 bg-white z-[9998] hidden flex-col items-center justify-center">
-<img id="loginSplashLogo" src="Logo.jpg" class="w-[280px] max-w-[80vw] object-contain">
-<p class="mt-4 text-[12px] font-bold text-[#ff6a00]">Please wait...</p>
-<div class="mt-5 w-7 h-7 border-[3px] border-[#00b578] border-t-transparent rounded-full animate-spin"></div>
+
+<div class="banner-wrap" id="bannerWrap">
+<div class="banner-slide active" id="slide0"><img id="bimg0" src=""><div class="banner-overlay"></div><div class="banner-text"><h2>MEGA SALE<br>Up to 60% OFF</h2><button>Shop Now →</button></div></div>
+<div class="banner-slide" id="slide1"><img id="bimg1" src=""><div class="banner-overlay"></div><div class="banner-text"><h2>New Bikes<br>Finance Available</h2><button>View →</button></div></div>
+<div class="banner-slide" id="slide2"><img id="bimg2" src=""><div class="banner-overlay"></div><div class="banner-text"><h2>ikman.lk Style<br>Fast Selling</h2><button>Explore →</button></div></div>
+<div class="dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
 </div>
-<header class="bg-white sticky top-0 z-40 border-b border-gray-100">
-<div class="max-w-[480px] mx-auto px-4">
-<div class="h-[56px] flex items-center justify-between">
-<h1 class="text-[24px] font-black">MyLanka<span class="text-[#ff6a00]">.lk</span></h1>
-<div class="flex items-center gap-3">
-<button class="text-[20px]"><i class="fa-regular fa-heart"></i></button>
-<button onclick="openCart()" class="relative text-[20px]"><i class="fa-solid fa-cart-shopping"></i><span id="cartCount" class="absolute -top-2 -right-2 bg-[#ff6a00] text-white text-[10px] font-black w-[16px] h-[16px] rounded-full grid place-items-center">0</span></button>
-</div></div>
-<div class="pb-3"><div class="bg-[#f3f4f6] rounded-full flex items-center px-4 py-3 gap-3 focus-within:ring-2 focus-within:ring-[#ff6a00]/20">
-<i class="fa-solid fa-magnifying-glass text-[#00b578]"></i>
-<input id="searchInput" placeholder="Search bikes, cars..." class="flex-1 bg-transparent outline-none text-[13px]" oninput="doSearch(this.value)" autocomplete="off">
-<button onclick="clearSearch()" id="clearSearchBtn" class="hidden text-gray-400"><i class="fa-solid fa-xmark"></i></button>
-</div></div></div></header>
-<div class="max-w-[480px] mx-auto px-4 mt-4">
-<div class="rounded-[20px] h-[130px] flex items-center justify-between p-5 text-white" style="background:linear-gradient(100deg,#ff8a00,#ffb347 30%,#8bc34a 100%);">
-<div><h2 class="font-black text-[18px] leading-5">MEGA SALE<br>Up to 60% OFF</h2><button class="mt-3 bg-white text-[#e65100] px-4 py-1.5 rounded-full text-[11px] font-black">Shop Now →</button></div>
-<div class="text-[44px]">🛍️</div></div></div>
-<div class="max-w-[480px] mx-auto mt-5">
-<div class="flex justify-between items-center px-4 mb-2"><h3 class="font-black text-[16px]">Categories</h3><span class="text-[10px] text-gray-400">Swipe posts to change →</span></div>
-<div id="catRow" class="swipe-row">
-<button onclick="filterCat('all')" id="cat-all" class="cat-btn active flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-gray-100">🏠</div><span class="text-[11px] font-bold">All</span></button>
-<button onclick="filterCat('vehicle')" id="cat-vehicle" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#e3f2fd]">🏍️</div><span class="text-[11px]">Vehicle</span></button>
-<button onclick="filterCat('electronics')" id="cat-electronics" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#fff3e0]">📱</div><span class="text-[11px]">Electronics</span></button>
-<button onclick="filterCat('fashion')" id="cat-fashion" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#e8f5e9]">👕</div><span class="text-[11px]">Fashion</span></button>
-<button onclick="filterCat('home')" id="cat-home" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#fff8e1]">🍳</div><span class="text-[11px]">Home</span></button>
-<button onclick="filterCat('beauty')" id="cat-beauty" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#fce4ec]">💄</div><span class="text-[11px]">Beauty</span></button>
-<button onclick="filterCat('grocery')" id="cat-grocery" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#f3e5f5]">🧺</div><span class="text-[11px]">Groceries</span></button>
-</div></div>
-<div class="max-w-[480px] mx-auto mt-3">
-<div class="flex justify-between items-center mb-2 px-4"><h3 class="font-black text-[16px]">Fresh Recommendations</h3><span id="swipeIndicator" class="text-[10px] bg-[#ff6a00] text-white px-2.5 py-1 rounded-full font-bold">All</span></div>
-<div id="grid" class="swipe-row min-h-[190px]"></div>
-<div id="emptyState" class="hidden text-center py-10 bg-[#fafafa] rounded-2xl border border-dashed mx-4 mt-2"><p class="text-[32px]">📦</p><p class="font-black mt-2 text-[12px]">No Ads in <span id="emptyCat">All</span></p><p id="searchEmpty" class="hidden text-[11px] text-gray-500 mt-1">No results for "<span id="searchTerm"></span>"</p><button onclick="openPostModal()" class="mt-3 bg-[#ff6a00] text-white px-5 py-2 rounded-full text-[11px] font-black">+ Post Ad</button></div>
-<p class="text-center text-[10px] text-gray-400 mt-2">👆 Swipe left/right on posts to change category • Tap to open</p>
+
+<div class="categories">
+<div class="cat-title">Categories</div>
+<div class="cat-list">
+<div class="cat-item active" onclick="filterCat('all',this)"><div class="cat-icon">🏠</div><p>All</p></div>
+<div class="cat-item" onclick="filterCat('vehicle',this)"><div class="cat-icon">🏍️</div><p>Vehicle</p></div>
+<div class="cat-item" onclick="filterCat('electronics',this)"><div class="cat-icon">📱</div><p>Electronics</p></div>
+<div class="cat-item" onclick="filterCat('fashion',this)"><div class="cat-icon">👕</div><p>Fashion</p></div>
+<div class="cat-item" onclick="filterCat('home',this)"><div class="cat-icon">🏡</div><p>Home</p></div>
 </div>
-<div class="h-[100px]"></div>
-<div class="fixed bottom-0 left-0 right-0 bg-white border-t rounded-t-[20px] z-50"><div class="max-w-[480px] mx-auto flex justify-around py-2.5">
-<button class="flex flex-col items-center text-[#ff6a00]"><i class="fa-solid fa-house text-[18px]"></i><span class="text-[10px] font-black">Home</span></button>
-<button class="flex flex-col items-center text-gray-400"><i class="fa-regular fa-user text-[18px]"></i><span class="text-[10px]">Categories</span></button>
-<button class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-percent text-[16px]"></i><span class="text-[10px]">Deals</span></button>
-<button onclick="openCart()" class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-cart-shopping text-[18px]"></i><span class="text-[10px]">Cart</span></button>
-<button onclick="openLogin()" class="flex flex-col items-center text-gray-400"><i class="fa-regular fa-circle-user text-[18px]"></i><span class="text-[10px]">Account</span></button>
-</div></div>
-<button onclick="openPostModal()" class="fixed bottom-[80px] right-4 bg-[#ff6a00] text-white w-[56px] h-[56px] rounded-full shadow-xl text-[28px] z-40 grid place-items-center border-4 border-white">+</button>
-<div id="detailModal" class="fixed inset-0 bg-[#f5f5f5] z-[80] hidden overflow-y-auto">
-<div class="max-w-[480px] mx-auto bg-white min-h-screen">
-<div class="sticky top-0 bg-white z-10 p-3 flex justify-between items-center border-b">
-<button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center"><i class="fa-solid fa-arrow-left"></i></button>
-<div class="flex gap-2"><button class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center"><i class="fa-regular fa-heart"></i></button><button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center">✕</button></div>
 </div>
-<div class="bg-white relative">
-<div id="dImageContainer" class="w-full h-[340px] overflow-hidden relative bg-white flex items-center justify-center">
-<img id="dImage" class="w-full h-full object-contain">
-<button onclick="swipeImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/30 text-white rounded-full grid place-items-center">‹</button>
-<button onclick="swipeImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/30 text-white rounded-full grid place-items-center">›</button>
+
+<div class="products"><div class="sec-title">Fresh Recommendations</div><div class="grid" id="productGrid"></div></div>
+<button class="add-btn" onclick="alert('Post Ad - Coming Soon!')">+</button>
+
+<div class="modal" id="productModal">
+<div class="modal-header"><div onclick="closeModal()" class="x-btn">←</div><div class="x-btn" onclick="closeModal()">✕</div></div>
+<div class="modal-img"><img id="mImg" src=""></div>
+<div class="modal-content">
+<div class="price" id="mPrice"></div><div class="title" id="mTitle"></div><div class="loc" id="mLoc"></div>
+<div class="desc-title">Description</div><div class="desc" id="mDesc"></div>
+<div class="seller-box"><div class="desc-title">Seller Information</div><div class="seller-phone" id="mPhone"></div>
+<div class="action-row"><button class="btn-call" id="mCall">Call Now</button><button class="btn-wa" id="mWa">WhatsApp</button></div></div>
 </div>
-<div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[10px] px-3 py-1 rounded-full"><span id="imgCounter">1 / 1</span></div>
-<div id="dMoreImgs" class="flex gap-2 p-2 overflow-x-auto hide-scrollbar bg-white border-b swipe-row" style="padding:8px 12px"></div>
 </div>
-<div class="p-4 bg-white mt-2"><p id="dPrice" class="text-[22px] font-black text-[#ff6a00]"></p><h1 id="dTitle" class="font-bold text-[15px] mt-2 leading-5 text-[#222]"></h1><p id="dLocation" class="text-[11px] text-gray-500 mt-1"></p></div>
-<div class="p-4 bg-white mt-2"><p class="font-black text-[13px] mb-2">Description</p><p id="dDesc" class="text-[12px] text-[#444] leading-5 whitespace-pre-wrap"></p></div>
-<div class="p-4 bg-white mt-2"><p class="font-black text-[13px] mb-3">Seller Information</p><div id="dPhoneBox" class="hidden"><p id="dPhone" class="font-black text-[15px] text-[#222]"></p><div class="grid grid-cols-2 gap-3 mt-3"><a id="dCallBtn" class="bg-[#00b578] text-white rounded-full py-3 text-center font-black text-[12px]">Call Now</a><a id="dWhatsappBtn" class="bg-[#25D366] text-white rounded-full py-3 text-center font-black text-[12px]">WhatsApp</a></div></div><p id="dEmail" class="text-[10px] text-gray-400 mt-3"></p></div>
-<div class="p-4 bg-white mt-2 mb-20"><button id="deleteBtn" onclick="deleteMyAd()" class="hidden w-full h-[44px] bg-red-50 text-red-600 border border-red-200 rounded-full font-bold text-[12px] mb-3">Delete My Ad</button><div class="grid grid-cols-2 gap-3"><button onclick="closeDetail()" class="h-[46px] border-2 border-gray-200 text-gray-700 rounded-full font-black text-[12px]">Close</button><button onclick="addToCartFromDetail()" class="h-[46px] bg-[#ff6a00] text-white rounded-full font-black text-[12px]">Add to Cart ✓</button></div><button onclick="contactSellerDirect()" class="w-full mt-3 h-[46px] bg-[#222] text-white rounded-full font-black text-[12px]">Contact Seller</button></div>
-</div></div>
-<div id="postModal" class="fixed inset-0 bg-black/50 z-[90] hidden items-end sm:items-center justify-center p-0 sm:p-4"><div class="bg-white w-full max-w-[480px] rounded-t-[24px] sm:rounded-[20px] max-h-[90vh] flex flex-col"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-black">Post New Ad</h3><button onclick="closePostModal()" class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center">✕</button></div><div class="p-4 space-y-3 overflow-y-auto flex-1"><select id="pCategory" class="w-full border-2 border-gray-100 p-3 rounded-xl bg-[#fafafa] text-[12px]"><option value="vehicle">Vehicle</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option><option value="home">Home & Kitchen</option><option value="beauty">Beauty</option><option value="grocery">Groceries</option></select><input id="pTitle" placeholder="Title *" class="w-full border-2 border-gray-100 p-3 rounded-xl text-[12px]"><div class="grid grid-cols-2 gap-2"><input id="pPrice" type="number" placeholder="Price Rs *" class="border-2 border-gray-100 p-3 rounded-xl text-[12px]"><input id="pLocation" placeholder="Location *" class="border-2 border-gray-100 p-3 rounded-xl text-[12px]"></div><input id="pPhone" placeholder="Phone 07XXXXXXXX *" class="w-full border-2 border-green-200 p-3 rounded-xl text-[12px] bg-green-50 font-bold"><textarea id="pDesc" placeholder="Full description..." rows="3" class="w-full border-2 border-gray-100 p-3 rounded-xl text-[12px] resize-none"></textarea><div class="border-2 border-dashed border-green-300 rounded-xl p-3 text-center bg-green-50/50"><input id="pImages" type="file" accept="image/*" multiple hidden><button type="button" onclick="document.getElementById('pImages').click()" class="w-full h-[44px] bg-white border-2 border-green-600 text-green-700 rounded-xl font-bold text-[12px]">Choose Photos (max 3)</button><div id="imgPreview" class="grid grid-cols-3 gap-2 mt-2 hidden"></div><p id="imgCount" class="text-[10px] text-green-600 font-bold mt-2 hidden"></p></div><button onclick="submitAd()" id="submitBtn" class="w-full h-[48px] bg-[#00b578] text-white font-black rounded-xl">Post Ad - Free</button><p id="postError" class="text-[10px] text-red-500 text-center font-bold"></p></div></div></div>
-<div id="loginModal" class="fixed inset-0 bg-white z-[85] hidden flex-col"><div class="flex-1 flex flex-col items-center justify-center p-6"><div id="loginLogoWrap" class="mb-6"><img src="Logo.jpg" class="w-[260px] max-w-[80vw] object-contain"></div><h2 class="font-black text-[22px]">Welcome</h2><p class="text-[11px] text-gray-500 mt-1">Login to post ads</p><button onclick="googleLogin()" class="w-full max-w-[320px] mt-6 h-[48px] border-2 border-gray-200 rounded-full font-bold text-[12px] flex items-center justify-center gap-2"><img src="https://www.google.com/favicon.ico" class="w-4 h-4">Continue with Google</button><button onclick="closeLogin()" class="mt-4 text-[11px] text-gray-400 underline">Skip</button><p id="error" class="text-[10px] text-red-500 mt-3 text-center"></p><p id="domainHelp" class="hidden text-[10px] bg-yellow-50 border border-yellow-200 p-3 rounded-xl mt-3">⚠️ Firebase එකේ mylanka-lk.netlify.app Domain එක Add කරන්න: console.firebase.google.com → Authentication → Settings → Authorized domains → Add domain</p></div></div>
-<div id="cartModal" class="fixed inset-0 bg-black/50 z-[90] hidden"><div class="bg-white w-full max-w-[400px] h-full ml-auto flex flex-col"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-black">Cart (<span id="cartCount2">0</span>)</h3><button onclick="closeCart()" class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center">✕</button></div><div id="cartItems" class="flex-1 overflow-y-auto p-4"></div><div class="p-4 border-t bg-[#fafafa]"><div class="flex justify-between font-black"><span>Subtotal</span><span id="cartSubtotal" class="text-[#ff6a00]">Rs. 0</span></div><button onclick="checkout()" class="w-full mt-3 h-[48px] bg-[#ff6a00] text-white font-black rounded-full">Checkout</button></div></div></div>
-<script type="module">
-import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
-import {getFirestore,collection,addDoc,query,orderBy,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
-const cfg={apiKey:"AIzaSyBCTh5NJgnhcXec_FMfpvFOuccBLxpHfxQ",authDomain:"mylanka-lk.firebaseapp.com",projectId:"mylanka-lk",storageBucket:"mylanka-lk.firebasestorage.app",messagingSenderId:"403802424795",appId:"1:403802424795:web:6736366578096ff129d3fe"};
-const app=initializeApp(cfg);const auth=getAuth(app);const db=getFirestore(app);
-let allProducts=[],cart=JSON.parse(localStorage.getItem('mylanka_cart')||'[]'),currentFilter='all',currentSearch='',selectedBase64=[],currentDeleteId=null,currentDetailId=null,currentImages=[],currentImgIndex=0;
-const categories=['all','vehicle','electronics','fashion','home','beauty','grocery'];
-let currentCatIndex=0;
-setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('splash-hide');setTimeout(()=>s.style.display='none',500);}},2200);
-const q=query(collection(db,"products"),orderBy("createdAt","desc"));
-onSnapshot(q,(snap)=>{allProducts=snap.docs.map(d=>({id:d.id,...d.data()}));render();updateCartUI();});
-onAuthStateChanged(auth,(u)=>{if(u)closeLogin();});
-function render(){
-let list=[...allProducts];
-if(currentFilter!=='all') list=list.filter(p=>p.category===currentFilter);
-if(currentSearch){
-const term=currentSearch.toLowerCase();
-list=list.filter(p=> (p.title||'').toLowerCase().includes(term) || (p.description||'').toLowerCase().includes(term) || (p.location||'').toLowerCase().includes(term));
+
+<script>
+const products=[
+{title:"Recondition bikes store ( FZ bike )",price:"LKR 225,000",location:"Chanaka motors / ගම්පහ",desc:"Recondition, Finance 15 min - Chanaka Motors",phone:"0769168955",img:"https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=500",cat:"vehicle"},
+{title:"Bajaj Pulser ns 200 bike - 2026 brand new",price:"LKR 535,000",location:"Kurunegala",desc:"Brand new with warranty",phone:"0771234567",img:"https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=500",cat:"vehicle"},
+{title:"iPhone 14 Pro Max 256GB",price:"LKR 385,000",location:"Colombo",desc:"Like new condition",phone:"0777654321",img:"https://images.unsplash.com/photo-1592750475338-74b7b21085ab?w=500",cat:"electronics"}
+];
+let currentSlide=0;
+function tryLoad(imgEl, names){
+  let i=0;
+  function next(){ if(i>=names.length) return; imgEl.onerror=()=>{i++;next();}; imgEl.src=names[i]; }
+  next();
 }
-const grid=document.getElementById('grid');const empty=document.getElementById('emptyState');
-const ind=document.getElementById('swipeIndicator');
-const catName=currentFilter==='all'?'All':currentFilter.charAt(0).toUpperCase()+currentFilter.slice(1);
-if(ind) ind.innerText=catName;
-if(document.getElementById('emptyCat')) document.getElementById('emptyCat').innerText=catName;
-const searchEmpty=document.getElementById('searchEmpty');
-const searchTermEl=document.getElementById('searchTerm');
-const clearBtn=document.getElementById('clearSearchBtn');
-if(currentSearch){
-if(clearBtn) clearBtn.classList.remove('hidden');
-if(searchTermEl) searchTermEl.innerText=currentSearch;
-}else{
-if(clearBtn) clearBtn.classList.add('hidden');
+tryLoad(document.getElementById('bimg0'),['banner1.jpg','Banner1.jpg']);
+tryLoad(document.getElementById('bimg1'),['banner2.jpg','Banner2.jpg']);
+tryLoad(document.getElementById('bimg2'),['banner3.jpg','Banner3.jpg']);
+setInterval(()=>{
+  document.querySelectorAll('.banner-slide').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.dot').forEach(d=>d.classList.remove('active'));
+  currentSlide=(currentSlide+1)%3;
+  document.getElementById('slide'+currentSlide).classList.add('active');
+  document.querySelectorAll('.dot')[currentSlide].classList.add('active');
+},3000);
+function render(list){
+ const grid=document.getElementById('productGrid'); grid.innerHTML='';
+ list.forEach((p,idx)=>{ grid.innerHTML+=`<div class="card" onclick="openModal(${idx})"><div class="card-img"><img src="${p.img}"></div><div class="card-body"><div class="card-title">${p.title}</div><div class="card-price">${p.price}</div></div></div>`; });
 }
-if(!grid) return;
-if(list.length===0){
-grid.innerHTML='';
-if(empty){
-empty.classList.remove('hidden');
-if(currentSearch && searchEmpty){searchEmpty.classList.remove('hidden');}else if(searchEmpty){searchEmpty.classList.add('hidden');}
+function openModal(i){
+ const p=products[i];
+ document.getElementById('mImg').src=p.img;
+ document.getElementById('mPrice').innerText=p.price;
+ document.getElementById('mTitle').innerText=p.title;
+ document.getElementById('mLoc').innerText='📍 '+p.location;
+ document.getElementById('mDesc').innerText=p.desc;
+ document.getElementById('mPhone').innerText=p.phone;
+ document.getElementById('mCall').onclick=()=>{window.location.href='tel:'+p.phone};
+ document.getElementById('mWa').onclick=()=>{let num=p.phone.startsWith('0')?'94'+p.phone.substring(1):p.phone; window.open('https://wa.me/'+num,'_blank')};
+ document.getElementById('productModal').classList.add('active');
 }
-return;
+function closeModal(){document.getElementById('productModal').classList.remove('active')}
+function filterCat(c,el){
+ document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active'));
+ el.classList.add('active');
+ const banner=document.getElementById('bannerWrap');
+ if(c==='all'){banner.style.display='block'; render(products);}
+ else{banner.style.display='none'; render(products.filter(p=>p.cat===c));}
 }
-if(empty) empty.classList.add('hidden');
-grid.innerHTML=list.map(p=>`
-<div onclick="openDetail('${p.id}')" class="premium-card cursor-pointer">
-<div class="w-full h-[100px] bg-[#fafafa] overflow-hidden">
-<img src="${p.image}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
-</div>
-<div class="p-2">
-<p class="text-[11px] font-bold leading-[13px] h-[26px] overflow-hidden text-[#222]">${p.title}</p>
-<p class="text-[#e53900] font-black text-[12px] mt-1 truncate">LKR ${Number(p.price).toLocaleString()}</p>
-</div>
-</div>`).join('');
-}
-window.filterCat=(c)=>{
-currentFilter=c;
-currentCatIndex=categories.indexOf(c);
-if(currentCatIndex<0) currentCatIndex=0;
-document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
-const active=document.getElementById('cat-'+c);
-if(active){active.classList.add('active');active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
-render();
-};
-window.doSearch=(v)=>{
-currentSearch=v.trim();
-render();
-};
-window.clearSearch=()=>{
-currentSearch='';
-document.getElementById('searchInput').value='';
-render();
-};
-const gridEl=document.getElementById('grid');
-let startX=0,startY=0,isSwiping=false,didSwipe=false;
-function handleTouchStart(e){
-startX=e.touches?e.touches[0].clientX:e.clientX;
-startY=e.touches?e.touches[0].clientY:e.clientY;
-isSwiping=false;didSwipe=false;
-}
-function handleTouchMove(e){
-if(!startX) return;
-let curX=e.touches?e.touches[0].clientX:e.clientX;
-let curY=e.touches?e.touches[0].clientY:e.clientY;
-let diffX=curX-startX;
-let diffY=curY-startY;
-if(Math.abs(diffX)>40 && Math.abs(diffX)>Math.abs(diffY)){
-isSwiping=true;
-}
-}
-function handleTouchEnd(e){
-if(!isSwiping){startX=0;return;}
-let endX=e.changedTouches?e.changedTouches[0].clientX:e.clientX;
-let diff=endX-startX;
-if(Math.abs(diff)>90){
-didSwipe=true;
-e.preventDefault();
-if(diff<0){currentCatIndex=(currentCatIndex+1)%categories.length;}else{currentCatIndex=(currentCatIndex-1+categories.length)%categories.length;}
-filterCat(categories[currentCatIndex]);
-if(gridEl){gridEl.style.transform=diff<0?'translateX(-30px)':'translateX(30px)';setTimeout(()=>gridEl.style.transform='translateX(0)',250);}
-}
-startX=0;isSwiping=false;
-setTimeout(()=>didSwipe=false,300);
-}
-if(gridEl){
-gridEl.addEventListener('touchstart',handleTouchStart,{passive:true});
-gridEl.addEventListener('touchmove',handleTouchMove,{passive:true});
-gridEl.addEventListener('touchend',handleTouchEnd,{passive:false});
-gridEl.addEventListener('mousedown',handleTouchStart);
-gridEl.addEventListener('mousemove',(e)=>{if(startX) handleTouchMove(e);});
-gridEl.addEventListener('mouseup',handleTouchEnd);
-}
-const pImagesInput=document.getElementById('pImages');const previewEl=document.getElementById('imgPreview');const countEl=document.getElementById('imgCount');
-if(pImagesInput){pImagesInput.addEventListener('change',async(e)=>{let files=Array.from(e.target.files).slice(0,3);selectedBase64=[];if(previewEl) previewEl.innerHTML='';for(let f of files){let b64=await toResized(f);selectedBase64.push(b64);if(previewEl) previewEl.innerHTML+=`<img src="${b64}" class="w-full h-[60px] object-cover rounded-lg border">`;}if(previewEl) previewEl.classList.remove('hidden');if(countEl){countEl.innerText=selectedBase64.length+' Photos Ready';countEl.classList.remove('hidden');}});}
-function toResized(file){return new Promise(r=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>{const c=document.createElement('canvas');let w=i.width,h=i.height;const m=700;if(w>m){h=h*m/w;w=m;}if(h>m){w=w*m/h;h=m;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',0.55));};i.src=u;});}
-window.openDetail=(id)=>{
-if(didSwipe) return;
-let p=allProducts.find(x=>x.id===id);if(!p) return;
-currentDetailId=id;currentDeleteId=id;
-currentImages=p.images&&p.images.length>0?p.images:[p.image];
-currentImgIndex=0;
-updateDetailImage();
-document.getElementById('dTitle').innerText=p.title||'';
-document.getElementById('dPrice').innerText='LKR '+Number(p.price).toLocaleString();
-document.getElementById('dLocation').innerText='📍 '+(p.location||'Sri Lanka');
-document.getElementById('dDesc').innerText=p.description||p.title||'';
-const box=document.getElementById('dPhoneBox');
-if(p.phone&&box){box.classList.remove('hidden');document.getElementById('dPhone').innerText=p.phone;document.getElementById('dCallBtn').href='tel:'+p.phone;let num=p.phone.replace(/[^0-9]/g,'');if(num.startsWith('0')) num='94'+num.slice(1);document.getElementById('dWhatsappBtn').href='https://wa.me/'+num;}else if(box) box.classList.add('hidden');
-document.getElementById('dEmail').innerText=p.email||'';
-const more=document.getElementById('dMoreImgs');
-if(more) more.innerHTML=currentImages.map((im,idx)=>`<img src="${im}" class="w-[52px] h-[52px] rounded-lg object-cover border-2 ${idx===0?'border-[#ff6a00]':'border-transparent'} cursor-pointer flex-shrink-0" onclick="jumpToImage(${idx})" id="thumb-${idx}">`).join('');
-const del=document.getElementById('deleteBtn');
-if(del){if(auth.currentUser&&p.user===auth.currentUser.uid) del.classList.remove('hidden');else del.classList.add('hidden');}
-document.getElementById('detailModal').classList.remove('hidden');
-document.body.style.overflow='hidden';
-};
-function updateDetailImage(){
-const img=document.getElementById('dImage');
-const counter=document.getElementById('imgCounter');
-if(img) img.src=currentImages[currentImgIndex]||'';
-if(counter) counter.innerText=(currentImgIndex+1)+' / '+currentImages.length;
-}
-window.swipeImage=(dir)=>{currentImgIndex=(currentImgIndex+dir+currentImages.length)%currentImages.length;updateDetailImage();};
-window.jumpToImage=(idx)=>{currentImgIndex=idx;updateDetailImage();};
-window.closeDetail=()=>{document.getElementById('detailModal').classList.add('hidden');document.body.style.overflow='';};
-window.addToCartFromDetail=()=>{
-if(!currentDetailId) return;
-let p=allProducts.find(x=>x.id===currentDetailId);if(!p) return;
-let it=cart.find(i=>i.id===currentDetailId);
-if(it) it.qty++; else cart.push({id:currentDetailId,title:p.title,price:Number(p.price),image:p.image,qty:1});
-localStorage.setItem('mylanka_cart',JSON.stringify(cart));
-updateCartUI();alert('Added to Cart ✓');openCart();
-};
-window.contactSellerDirect=()=>{const box=document.getElementById('dPhoneBox');if(box) box.scrollIntoView({behavior:'smooth'});};
-window.deleteMyAd=async()=>{if(!currentDeleteId) return;if(!confirm('Delete?')) return;await deleteDoc(doc(db,"products",currentDeleteId));closeDetail();};
-window.openPostModal=()=>{if(!auth.currentUser){openLogin();return;}document.getElementById('postModal').classList.remove('hidden');document.getElementById('postModal').classList.add('flex');};
-window.closePostModal=()=>{document.getElementById('postModal').classList.add('hidden');document.getElementById('postModal').classList.remove('flex');};
-window.submitAd=async()=>{try{const title=document.getElementById('pTitle').value.trim();const price=document.getElementById('pPrice').value;const loc=document.getElementById('pLocation').value.trim();const phone=document.getElementById('pPhone').value.trim();const cat=document.getElementById('pCategory').value;const desc=document.getElementById('pDesc').value.trim();const err=document.getElementById('postError');if(!title||!price||!loc||!phone){if(err) err.innerText='Fill all!';return;}if(selectedBase64.length===0){if(err) err.innerText='Choose photo!';return;}const btn=document.getElementById('submitBtn');btn.innerText='Posting...';btn.disabled=true;await addDoc(collection(db,"products"),{title,price:Number(price),location:loc,phone:phone.replace(/[^0-9+]/g,''),category:cat,description:desc,image:selectedBase64[0],images:selectedBase64,createdAt:Date.now(),user:auth.currentUser.uid,email:auth.currentUser.email||''});alert('Posted!');closePostModal();document.getElementById('pTitle').value='';document.getElementById('pPrice').value='';document.getElementById('pLocation').value='';document.getElementById('pPhone').value='';document.getElementById('pDesc').value='';selectedBase64=[];if(previewEl){previewEl.innerHTML='';previewEl.classList.add('hidden');}if(countEl) countEl.classList.add('hidden');btn.innerText='Post Ad - Free';btn.disabled=false;}catch(e){document.getElementById('postError').innerText=e.message;const b=document.getElementById('submitBtn');if(b){b.innerText='Post Ad - Free';b.disabled=false;}}};
-window.openLogin=()=>{const m=document.getElementById('loginModal');const w=document.getElementById('loginLogoWrap');if(m){m.classList.remove('hidden');m.classList.add('flex');if(w){w.classList.remove('logo-drop');void w.offsetWidth;w.classList.add('logo-drop');}}};
-window.closeLogin=()=>{const m=document.getElementById('loginModal');if(m){m.classList.add('hidden');m.classList.remove('flex');}};
-window.googleLogin=async()=>{
-const errEl=document.getElementById('error');
-const helpEl=document.getElementById('domainHelp');
-const ls=document.getElementById('loginSplash');const ll=document.getElementById('loginSplashLogo');
-try{
-if(ls&&ll){ls.classList.remove('hidden');ls.classList.add('flex');ll.classList.remove('logo-drop');void ll.offsetWidth;ll.classList.add('logo-drop');}
-await signInWithPopup(auth,new GoogleAuthProvider());
-if(ls){ls.classList.add('hidden');ls.classList.remove('flex');}
-closeLogin();
-}catch(e){
-if(ls){ls.classList.add('hidden');ls.classList.remove('flex');}
-if(errEl) errEl.innerText=e.message;
-if(e.message.includes('unauthorized-domain') && helpEl){helpEl.classList.remove('hidden');}
-}};
-function updateCartUI(){const total=cart.reduce((s,i)=>s+i.qty,0);const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);document.getElementById('cartCount').innerText=total;document.getElementById('cartCount2').innerText=total;document.getElementById('cartSubtotal').innerText='Rs. '+sub.toLocaleString();const el=document.getElementById('cartItems');if(!el) return;if(cart.length===0){el.innerHTML='<div class="text-center py-20"><p class="text-[40px]">🛒</p><p class="font-bold mt-2">Cart empty</p></div>';}else{el.innerHTML=cart.map(i=>`<div class="flex gap-3 border-b pb-3 mb-3"><img src="${i.image}" class="w-[60px] h-[60px] rounded-lg object-cover"><div class="flex-1"><p class="text-[11px] font-bold line-clamp-2">${i.title}</p><p class="text-[11px] text-[#e53900] font-black">LKR ${Number(i.price).toLocaleString()} x ${i.qty}</p><div class="flex gap-2 mt-1 items-center"><button onclick="changeQty('${i.id}',-1)" class="w-6 h-6 bg-gray-100 rounded-full grid place-items-center font-bold">-</button><span class="text-[11px] font-bold">${i.qty}</span><button onclick="changeQty('${i.id}',1)" class="w-6 h-6 bg-gray-100 rounded-full grid place-items-center font-bold">+</button><button onclick="removeFromCart('${i.id}')" class="ml-auto text-[10px] text-red-500 font-bold">Remove</button></div></div></div>`).join('');}}
-window.changeQty=(id,d)=>{let it=cart.find(i=>i.id===id);if(!it) return;it.qty+=d;if(it.qty<=0) cart=cart.filter(i=>i.id!==id);localStorage.setItem('mylanka_cart',JSON.stringify(cart));updateCartUI();};
-window.removeFromCart=(id)=>{cart=cart.filter(i=>i.id!==id);localStorage.setItem('mylanka_cart',JSON.stringify(cart));updateCartUI();};
-window.openCart=()=>{document.getElementById('cartModal').classList.remove('hidden');updateCartUI();};
-window.closeCart=()=>{document.getElementById('cartModal').classList.add('hidden');};
-window.checkout=()=>{if(cart.length===0) return;alert('Order placed! Total: Rs.'+cart.reduce((s,i)=>s+i.price*i.qty,0).toLocaleString());cart=[];localStorage.setItem('mylanka_cart','[]');updateCartUI();closeCart();};
-updateCartUI();
+document.getElementById('searchInput').addEventListener('input',e=>{
+ const s=e.target.value.toLowerCase();
+ render(products.filter(p=>p.title.toLowerCase().includes(s)));
+ document.getElementById('bannerWrap').style.display=s? 'none':'block';
+});
+render(products);
 </script>
 </body>
 </html>
