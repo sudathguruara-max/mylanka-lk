@@ -1,198 +1,286 @@
-  <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-<title>MyLanka.lk - Sri Lanka's Marketplace</title><script src="https://cdn.tailwindcss.com"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>*{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;-webkit-tap-highlight-color:transparent}body{background:#f5f5f5;margin:0}
-.ikman-card{background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.08);border:1px solid #eee}
-.ali-price{color:#ff4747;font-weight:800}
-.cat-chip{transition:all.2s;border:1.5px solid #e5e7eb}
-.cat-chip.active{background:#ff6a00;color:white;border-color:#ff6a00;transform:scale(1.05);box-shadow:0 4px 12px rgba(255,106,0,.3)}
-.banner-dot{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.5)}
-.banner-dot.active{width:22px;background:white}
-#bannerTrack{transition:transform.5s cubic-bezier(.4,0,.2,1)}
-#bannerWrapper{transition:all.4s ease;overflow:hidden}
-#bannerWrapper.hidden-banner{height:0!important;opacity:0;margin:0!important}
-.swipe-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 12px 12px;scroll-behavior:smooth}
-.swipe-row::-webkit-scrollbar{display:none}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 12px}
-@keyframes logoDrop{0%{transform:translateY(-350px) scale(.3);opacity:0}60%{transform:translateY(15px) scale(1.1);opacity:1}100%{transform:translateY(0) scale(1);opacity:1}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>MyLanka.lk</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+*{font-family:system-ui,sans-serif;-webkit-tap-highlight-color:transparent}
+body{background:#fff;margin:0;overflow-x:hidden}
+.premium-card{border-radius:14px;background:#fff;box-shadow:0 1px 6px rgba(0,0,0,.08);border:1px solid #f0f0f0;overflow:hidden;flex-shrink:0;width:160px;min-width:160px;transition:transform.1s}
+.premium-card:active{transform:scale(.97)}
+.cat-btn.active.cat-icon{background:#ff6a00!important;color:white;transform:scale(1.12);box-shadow:0 4px 12px rgba(255,106,0,.4)}
+.cat-btn.active span{color:#ff6a00;font-weight:900}
+.cat-icon{width:56px;height:56px;border-radius:16px;display:grid;place-items:center;font-size:22px;transition:all.2s}
+@keyframes logoDrop{0%{transform:translateY(-350px) scale(.3);opacity:0}60%{transform:translateY(15px) scale(1.1);opacity:1}80%{transform:translateY(-8px) scale(.95)}100%{transform:translateY(0) scale(1);opacity:1}}
 .logo-drop{animation:logoDrop 1.2s cubic-bezier(.34,1.56,.64,1) forwards}
-@keyframes fadeOut{to{opacity:0;visibility:hidden}}.splash-hide{animation:fadeOut.5s ease 2.2s forwards}
-.line-clamp-2{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-</style></head>
+@keyframes fadeOut{to{opacity:0;visibility:hidden}}
+.splash-hide{animation:fadeOut.5s ease 2.2s forwards}
+.hide-scrollbar::-webkit-scrollbar{display:none}
+.swipe-row{display:flex;gap:10px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding:6px 16px 12px;scroll-behavior:smooth}
+.swipe-row::-webkit-scrollbar{display:none}
+#grid{transition:transform.2s}
+</style>
+</head>
 <body>
 <div id="splash" class="fixed inset-0 bg-white z-[9999] flex flex-col items-center justify-center">
-<img src="Logo.jpg" class="w-[300px] logo-drop" onerror="this.style.display='none'"><div class="mt-6 w-7 h-7 border-[3px] border-[#ff6a00] border-t-transparent rounded-full animate-spin"></div>
-<p class="mt-3 text-[11px] font-bold text-gray-400">MyLanka.lk - Sri Lanka's Marketplace</p></div>
-
-<header class="bg-white sticky top-0 z-40 shadow-sm">
-<div class="bg-[#149777] text-white text-[10px] py-1.5 text-center hidden sm:block">Free Delivery | Buyer Protection | All Over Sri Lanka</div>
-<div class="max-w-[480px] mx-auto px-3">
-<div class="h-[56px] flex items-center justify-between gap-3">
-<div class="flex items-center gap-2"><div class="w-8 h-8 bg-[#ff6a00] rounded-lg grid place-items-center text-white font-black">M</div>
-<h1 class="text-[20px] font-black">MyLanka<span class="text-[#ff6a00]">.lk</span></h1></div>
-<div class="flex items-center gap-3"><button onclick="openCart()" class="relative"><i class="fa-regular fa-heart text-[20px]"></i><span id="cartCount" class="absolute -top-2 -right-2 bg-[#ff4747] text-white text-[9px] font-black w-[16px] h-[16px] rounded-full grid place-items-center">0</span></button>
-<button class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center"><i class="fa-solid fa-ellipsis-vertical text-[12px]"></i></button></div></div>
-<div class="pb-3 flex gap-2">
-<div class="flex-1 bg-[#f5f5f5] rounded-full flex items-center px-4 py-3 gap-2 border border-transparent focus-within:border-[#ff6a00] focus-within:bg-white">
-<i class="fa-solid fa-magnifying-glass text-[#ff6a00]"></i>
-<input id="searchInput" placeholder="Search in MyLanka.lk" class="flex-1 bg-transparent outline-none text-[13px]" oninput="doSearch(this.value)">
-<i class="fa-solid fa-camera text-gray-400"></i>
-</div><button class="bg-[#ff6a00] text-white w-[44px] h-[44px] rounded-full grid place-items-center"><i class="fa-solid fa-magnifying-glass"></i></button>
-</div></div></header>
-
-<div id="bannerWrapper" class="max-w-[480px] mx-auto mt-3 px-3">
-<div class="relative overflow-hidden rounded-xl h-[160px] bg-white shadow-sm" id="bannerContainer">
-<div id="bannerTrack" class="flex h-full w-[300%]">
-<div class="w-full h-full flex-shrink-0 relative bg-gradient-to-br from-slate-900 to-orange-600">
-<img src="banner1.jpg" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'">
-<div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent p-4 flex flex-col justify-center text-white">
-<span class="bg-[#ff6a00] text-[9px] font-black px-2 py-1 rounded w-fit">HOT DEAL</span><h2 class="font-black text-[18px] mt-1 leading-5">Find Your<br>Dream Bike Today</h2><button class="bg-white text-black text-[10px] font-black px-3 py-1.5 rounded-full w-fit mt-2">Shop Now</button></div></div>
-<div class="w-full h-full flex-shrink-0 relative bg-gradient-to-br from-orange-500 to-green-600">
-<img src="banner2.jpg" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'">
-<div class="absolute inset-0 bg-gradient-to-r from-black/60 to-transparent p-4 flex flex-col justify-center text-white">
-<span class="bg-white text-black text-[9px] font-black px-2 py-1 rounded w-fit">SELL FAST</span><h2 class="font-black text-[18px] mt-1 leading-5">Sell Anything<br>in 30 Seconds</h2><button class="bg-[#ff6a00] text-white text-[10px] font-black px-3 py-1.5 rounded-full w-fit mt-2">Post Ad Free</button></div></div>
-<div class="w-full h-full flex-shrink-0 relative bg-gradient-to-br from-green-700 to-slate-900">
-<img src="banner3.jpg" class="w-full h-full object-cover absolute inset-0" onerror="this.style.display='none'">
-<div class="absolute inset-0 bg-gradient-to-r from-black/70 to-transparent p-4 flex flex-col justify-center text-white">
-<span class="bg-[#149777] text-[9px] font-black px-2 py-1 rounded w-fit">TRUSTED</span><h2 class="font-black text-[18px] mt-1 leading-5">All Over<br>Sri Lanka</h2><p class="text-[10px] opacity-80 mt-1">25 Districts - 100% Safe</p></div></div>
+<img src="Logo.jpg" class="w-[300px] max-w-[80vw] logo-drop object-contain">
+<div class="mt-6 w-7 h-7 border-[3px] border-[#ff6a00] border-t-transparent rounded-full animate-spin"></div>
 </div>
-<div class="absolute bottom-2.5 left-1/2 -translate-x-1/2 flex gap-1.5 bg-black/30 backdrop-blur px-3 py-1 rounded-full">
-<div class="banner-dot active" id="dot0"></div><div class="banner-dot" id="dot1"></div><div class="banner-dot" id="dot2"></div></div>
-</div></div>
-
-<div class="max-w-[480px] mx-auto mt-4 bg-white py-3 shadow-sm">
-<div class="flex justify-between items-center px-3 mb-2.5"><h3 class="font-bold text-[13px]">Browse Categories</h3><button class="text-[11px] text-[#ff6a00] font-bold">View All</button></div>
-<div id="catRow" class="swipe-row" style="padding-bottom:8px">
-<button onclick="filterCat('all')" id="cat-all" class="cat-chip active flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">🏠</span><span class="text-[10px] font-bold mt-1">All</span></button>
-<button onclick="filterCat('vehicle')" id="cat-vehicle" class="cat-chip flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">🏍️</span><span class="text-[10px] mt-1">Vehicles</span></button>
-<button onclick="filterCat('electronics')" id="cat-electronics" class="cat-chip flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">📱</span><span class="text-[10px] mt-1">Phones</span></button>
-<button onclick="filterCat('fashion')" id="cat-fashion" class="cat-chip flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">👕</span><span class="text-[10px] mt-1">Fashion</span></button>
-<button onclick="filterCat('home')" id="cat-home" class="cat-chip flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">🛋️</span><span class="text-[10px] mt-1">Home</span></button>
-<button onclick="filterCat('beauty')" id="cat-beauty" class="cat-chip flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">💄</span><span class="text-[10px] mt-1">Beauty</span></button>
-<button onclick="filterCat('grocery')" id="cat-grocery" class="cat-chip flex flex-col items-center min-w-[64px] py-2.5 px-3 rounded-xl bg-white"><span class="text-[20px]">🥦</span><span class="text-[10px] mt-1">Grocery</span></button>
-</div></div>
-
-<div id="freshSection" class="max-w-[480px] mx-auto mt-3 bg-white py-3 shadow-sm">
-<div class="flex justify-between items-center mb-3 px-3"><div class="flex items-center gap-2"><h3 id="freshTitle" class="font-bold text-[14px]">Fresh Recommendations</h3><span class="bg-[#ff4747] text-white text-[9px] font-black px-1.5 py-0.5 rounded">HOT</span></div>
-<span id="swipeIndicator" class="text-[10px] bg-[#fff4e6] text-[#ff6a00] border border-[#ff6a00]/20 px-2.5 py-1 rounded-full font-bold">All - Swipe</span></div>
-<div id="grid" class="swipe-row min-h-[180px]"></div>
-<div id="grid2" class="grid-2 hidden"></div>
-<div class="flex justify-center mt-3"><button onclick="toggleView()" id="viewBtn" class="text-[11px] bg-[#f5f5f5] px-4 py-2 rounded-full font-bold">Switch to Grid View</button></div>
-<div id="emptyState" class="hidden text-center py-10 bg-[#fafafa] rounded-xl border border-dashed mx-3 mt-2"><p class="text-[36px]">📦</p><p class="font-bold mt-2 text-[12px]">No Ads in <span id="emptyCat">All</span></p><button onclick="openPostModal()" class="mt-3 bg-[#ff6a00] text-white px-5 py-2 rounded-full text-[11px] font-black">+ Post First Ad</button></div>
-<p class="text-center text-[10px] text-gray-400 mt-3 px-3">Swipe products left/right to change category - Like ikman.lk & AliExpress</p>
+<div id="loginSplash" class="fixed inset-0 bg-white z-[9998] hidden flex-col items-center justify-center">
+<img id="loginSplashLogo" src="Logo.jpg" class="w-[280px] max-w-[80vw] object-contain">
+<p class="mt-4 text-[12px] font-bold text-[#ff6a00]">Please wait...</p>
+<div class="mt-5 w-7 h-7 border-[3px] border-[#00b578] border-t-transparent rounded-full animate-spin"></div>
 </div>
-
-<div class="h-[90px]"></div>
-<div class="fixed bottom-0 left-0 right-0 bg-white border-t z-50"><div class="max-w-[480px] mx-auto flex justify-around py-2">
-<button class="flex flex-col items-center text-[#ff6a00]"><i class="fa-solid fa-house text-[18px]"></i><span class="text-[9px] font-black mt-1">Home</span></button>
-<button class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-store text-[18px]"></i><span class="text-[9px] mt-1">Shop</span></button>
-<button onclick="openPostModal()" class="flex flex-col items-center -mt-4"><div class="w-[48px] h-[48px] bg-[#ff6a00] rounded-full grid place-items-center text-white text-[22px] shadow-lg border-4 border-white">+</div><span class="text-[9px] font-bold mt-1">Sell</span></button>
-<button onclick="openCart()" class="flex flex-col items-center text-gray-400 relative"><i class="fa-regular fa-heart text-[18px]"></i><span class="text-[9px] mt-1">Wishlist</span></button>
-<button onclick="openLogin()" class="flex flex-col items-center text-gray-400"><i class="fa-regular fa-user text-[18px]"></i><span class="text-[9px] mt-1">Account</span></button>
+<header class="bg-white sticky top-0 z-40 border-b border-gray-100">
+<div class="max-w-[480px] mx-auto px-4">
+<div class="h-[56px] flex items-center justify-between">
+<h1 class="text-[24px] font-black">MyLanka<span class="text-[#ff6a00]">.lk</span></h1>
+<div class="flex items-center gap-3">
+<button class="text-[20px]"><i class="fa-regular fa-heart"></i></button>
+<button onclick="openCart()" class="relative text-[20px]"><i class="fa-solid fa-cart-shopping"></i><span id="cartCount" class="absolute -top-2 -right-2 bg-[#ff6a00] text-white text-[10px] font-black w-[16px] h-[16px] rounded-full grid place-items-center">0</span></button>
 </div></div>
-
+<div class="pb-3"><div class="bg-[#f3f4f6] rounded-full flex items-center px-4 py-3 gap-3 focus-within:ring-2 focus-within:ring-[#ff6a00]/20">
+<i class="fa-solid fa-magnifying-glass text-[#00b578]"></i>
+<input id="searchInput" placeholder="Search bikes, cars..." class="flex-1 bg-transparent outline-none text-[13px]" oninput="doSearch(this.value)" autocomplete="off">
+<button onclick="clearSearch()" id="clearSearchBtn" class="hidden text-gray-400"><i class="fa-solid fa-xmark"></i></button>
+</div></div></div></header>
+<div class="max-w-[480px] mx-auto px-4 mt-4">
+<div class="rounded-[20px] h-[130px] flex items-center justify-between p-5 text-white" style="background:linear-gradient(100deg,#ff8a00,#ffb347 30%,#8bc34a 100%);">
+<div><h2 class="font-black text-[18px] leading-5">MEGA SALE<br>Up to 60% OFF</h2><button class="mt-3 bg-white text-[#e65100] px-4 py-1.5 rounded-full text-[11px] font-black">Shop Now →</button></div>
+<div class="text-[44px]">🛍️</div></div></div>
+<div class="max-w-[480px] mx-auto mt-5">
+<div class="flex justify-between items-center px-4 mb-2"><h3 class="font-black text-[16px]">Categories</h3><span class="text-[10px] text-gray-400">Swipe posts to change →</span></div>
+<div id="catRow" class="swipe-row">
+<button onclick="filterCat('all')" id="cat-all" class="cat-btn active flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-gray-100">🏠</div><span class="text-[11px] font-bold">All</span></button>
+<button onclick="filterCat('vehicle')" id="cat-vehicle" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#e3f2fd]">🏍️</div><span class="text-[11px]">Vehicle</span></button>
+<button onclick="filterCat('electronics')" id="cat-electronics" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#fff3e0]">📱</div><span class="text-[11px]">Electronics</span></button>
+<button onclick="filterCat('fashion')" id="cat-fashion" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#e8f5e9]">👕</div><span class="text-[11px]">Fashion</span></button>
+<button onclick="filterCat('home')" id="cat-home" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#fff8e1]">🍳</div><span class="text-[11px]">Home</span></button>
+<button onclick="filterCat('beauty')" id="cat-beauty" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#fce4ec]">💄</div><span class="text-[11px]">Beauty</span></button>
+<button onclick="filterCat('grocery')" id="cat-grocery" class="cat-btn flex flex-col items-center min-w-[66px] gap-1.5"><div class="cat-icon bg-[#f3e5f5]">🧺</div><span class="text-[11px]">Groceries</span></button>
+</div></div>
+<div class="max-w-[480px] mx-auto mt-3">
+<div class="flex justify-between items-center mb-2 px-4"><h3 class="font-black text-[16px]">Fresh Recommendations</h3><span id="swipeIndicator" class="text-[10px] bg-[#ff6a00] text-white px-2.5 py-1 rounded-full font-bold">All</span></div>
+<div id="grid" class="swipe-row min-h-[190px]"></div>
+<div id="emptyState" class="hidden text-center py-10 bg-[#fafafa] rounded-2xl border border-dashed mx-4 mt-2"><p class="text-[32px]">📦</p><p class="font-black mt-2 text-[12px]">No Ads in <span id="emptyCat">All</span></p><p id="searchEmpty" class="hidden text-[11px] text-gray-500 mt-1">No results for "<span id="searchTerm"></span>"</p><button onclick="openPostModal()" class="mt-3 bg-[#ff6a00] text-white px-5 py-2 rounded-full text-[11px] font-black">+ Post Ad</button></div>
+<p class="text-center text-[10px] text-gray-400 mt-2">👆 Swipe left/right on posts to change category • Tap to open</p>
+</div>
+<div class="h-[100px]"></div>
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t rounded-t-[20px] z-50"><div class="max-w-[480px] mx-auto flex justify-around py-2.5">
+<button class="flex flex-col items-center text-[#ff6a00]"><i class="fa-solid fa-house text-[18px]"></i><span class="text-[10px] font-black">Home</span></button>
+<button class="flex flex-col items-center text-gray-400"><i class="fa-regular fa-user text-[18px]"></i><span class="text-[10px]">Categories</span></button>
+<button class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-percent text-[16px]"></i><span class="text-[10px]">Deals</span></button>
+<button onclick="openCart()" class="flex flex-col items-center text-gray-400"><i class="fa-solid fa-cart-shopping text-[18px]"></i><span class="text-[10px]">Cart</span></button>
+<button onclick="openLogin()" class="flex flex-col items-center text-gray-400"><i class="fa-regular fa-circle-user text-[18px]"></i><span class="text-[10px]">Account</span></button>
+</div></div>
+<button onclick="openPostModal()" class="fixed bottom-[80px] right-4 bg-[#ff6a00] text-white w-[56px] h-[56px] rounded-full shadow-xl text-[28px] z-40 grid place-items-center border-4 border-white">+</button>
 <div id="detailModal" class="fixed inset-0 bg-[#f5f5f5] z-[80] hidden overflow-y-auto">
 <div class="max-w-[480px] mx-auto bg-white min-h-screen">
 <div class="sticky top-0 bg-white z-10 p-3 flex justify-between items-center border-b">
 <button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center"><i class="fa-solid fa-arrow-left"></i></button>
-<div class="flex gap-2"><button class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center"><i class="fa-regular fa-heart"></i></button><button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center">X</button></div></div>
-<div class="bg-white relative"><div class="w-full h-[360px] bg-white flex items-center justify-center relative">
-<img id="dImage" class="w-full h-full object-contain"><button onclick="swipeImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/40 text-white rounded-full grid place-items-center"><</button><button onclick="swipeImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-black/40 text-white rounded-full grid place-items-center">></button>
-<div class="absolute bottom-2 right-2 bg-black/60 text-white text-[10px] px-2.5 py-1 rounded-full"><span id="imgCounter">1 / 1</span></div></div>
-<div id="dMoreImgs" class="flex gap-2 p-2 swipe-row" style="padding:8px 12px"></div></div>
-<div class="p-4 bg-white mt-2"><div class="flex items-start justify-between"><div><p id="dPrice" class="text-[22px] font-black ali-price"></p><p class="text-[10px] text-gray-500 mt-1"><span class="line-through">LKR 950,000</span> <span class="bg-[#fff4e6] text-[#ff6a00] px-1.5 py-0.5 rounded font-bold ml-1">-12% OFF</span></p></div><span class="bg-[#e8f5e9] text-[#2e7d32] text-[10px] font-bold px-2 py-1 rounded">In Stock</span></div>
-<h1 id="dTitle" class="font-bold text-[14px] mt-3 leading-5"></h1><div class="flex items-center gap-2 mt-2 text-[11px] text-gray-500"><span>4.8 (127 reviews)</span><span>-</span><span id="dLocation"></span></div></div>
-<div class="p-4 bg-white mt-2"><p class="font-bold text-[13px] mb-2">Description</p><p id="dDesc" class="text-[12px] text-[#444] leading-5 whitespace-pre-wrap"></p></div>
-<div class="p-4 bg-white mt-2"><p class="font-bold text-[13px] mb-3">Seller Info - 100% Verified</p><div id="dPhoneBox" class="hidden"><p id="dPhone" class="font-black text-[14px]"></p><div class="grid grid-cols-2 gap-3 mt-3"><a id="dCallBtn" class="bg-[#149777] text-white rounded-full py-3 text-center font-bold text-[12px]">Call Seller</a><a id="dWhatsappBtn" class="bg-[#25D366] text-white rounded-full py-3 text-center font-bold text-[12px]">WhatsApp</a></div></div></div>
-<div class="p-4 bg-white mt-2 mb-20"><div class="grid grid-cols-2 gap-3"><button onclick="closeDetail()" class="h-[46px] border-2 border-gray-200 rounded-full font-bold text-[12px]">Close</button><button onclick="addToCartFromDetail()" id="saveBtn" class="h-[46px] bg-[#ff6a00] text-white rounded-full font-bold text-[12px]">Add to Wishlist</button></div><button onclick="contactSellerDirect()" class="w-full mt-3 h-[46px] bg-[#222] text-white rounded-full font-bold text-[12px]">Contact Seller Now</button><button onclick="deleteMyAd()" id="delBtn" class="w-full mt-3 h-[40px] text-red-500 text-[11px] font-bold hidden">Delete My Ad</button></div>
+<div class="flex gap-2"><button class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center"><i class="fa-regular fa-heart"></i></button><button onclick="closeDetail()" class="w-9 h-9 bg-gray-100 rounded-full grid place-items-center">✕</button></div>
+</div>
+<div class="bg-white relative">
+<div id="dImageContainer" class="w-full h-[340px] overflow-hidden relative bg-white flex items-center justify-center">
+<img id="dImage" class="w-full h-full object-contain">
+<button onclick="swipeImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/30 text-white rounded-full grid place-items-center">‹</button>
+<button onclick="swipeImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 bg-black/30 text-white rounded-full grid place-items-center">›</button>
+</div>
+<div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[10px] px-3 py-1 rounded-full"><span id="imgCounter">1 / 1</span></div>
+<div id="dMoreImgs" class="flex gap-2 p-2 overflow-x-auto hide-scrollbar bg-white border-b swipe-row" style="padding:8px 12px"></div>
+</div>
+<div class="p-4 bg-white mt-2"><p id="dPrice" class="text-[22px] font-black text-[#ff6a00]"></p><h1 id="dTitle" class="font-bold text-[15px] mt-2 leading-5 text-[#222]"></h1><p id="dLocation" class="text-[11px] text-gray-500 mt-1"></p></div>
+<div class="p-4 bg-white mt-2"><p class="font-black text-[13px] mb-2">Description</p><p id="dDesc" class="text-[12px] text-[#444] leading-5 whitespace-pre-wrap"></p></div>
+<div class="p-4 bg-white mt-2"><p class="font-black text-[13px] mb-3">Seller Information</p><div id="dPhoneBox" class="hidden"><p id="dPhone" class="font-black text-[15px] text-[#222]"></p><div class="grid grid-cols-2 gap-3 mt-3"><a id="dCallBtn" class="bg-[#00b578] text-white rounded-full py-3 text-center font-black text-[12px]">Call Now</a><a id="dWhatsappBtn" class="bg-[#25D366] text-white rounded-full py-3 text-center font-black text-[12px]">WhatsApp</a></div></div><p id="dEmail" class="text-[10px] text-gray-400 mt-3"></p></div>
+<div class="p-4 bg-white mt-2 mb-20"><button id="deleteBtn" onclick="deleteMyAd()" class="hidden w-full h-[44px] bg-red-50 text-red-600 border border-red-200 rounded-full font-bold text-[12px] mb-3">Delete My Ad</button><div class="grid grid-cols-2 gap-3"><button onclick="closeDetail()" class="h-[46px] border-2 border-gray-200 text-gray-700 rounded-full font-black text-[12px]">Close</button><button onclick="addToCartFromDetail()" class="h-[46px] bg-[#ff6a00] text-white rounded-full font-black text-[12px]">Add to Cart ✓</button></div><button onclick="contactSellerDirect()" class="w-full mt-3 h-[46px] bg-[#222] text-white rounded-full font-black text-[12px]">Contact Seller</button></div>
 </div></div>
-
-<div id="postModal" class="fixed inset-0 bg-black/50 z-[90] hidden items-end justify-center p-0 sm:p-4"><div class="bg-white w-full max-w-[480px] rounded-t-[20px] max-h-[90vh] flex flex-col"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-bold">Post New Ad - Free</h3><button onclick="closePostModal()" class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center">X</button></div>
-<div class="p-4 space-y-3 overflow-y-auto flex-1"><select id="pCategory" class="w-full border p-3 rounded-xl bg-[#fafafa] text-[12px]"><option value="vehicle">Vehicle</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option><option value="home">Home</option><option value="beauty">Beauty</option><option value="grocery">Groceries</option></select>
-<input id="pTitle" placeholder="Title *" class="w-full border p-3 rounded-xl text-[12px]"><div class="grid grid-cols-2 gap-2"><input id="pPrice" type="number" placeholder="Price Rs *" class="border p-3 rounded-xl text-[12px]"><input id="pLocation" placeholder="Location *" class="border p-3 rounded-xl text-[12px]"></div>
-<input id="pPhone" placeholder="Phone 07XXXXXXXX *" class="w-full border-2 border-green-200 p-3 rounded-xl text-[12px] bg-green-50 font-bold"><textarea id="pDesc" placeholder="Full description..." rows="3" class="w-full border p-3 rounded-xl text-[12px]"></textarea>
-<div class="border-2 border-dashed border-green-300 rounded-xl p-3 text-center bg-green-50/50"><input id="pImages" type="file" accept="image/*" multiple hidden><button type="button" onclick="document.getElementById('pImages').click()" class="w-full h-[44px] bg-white border-2 border-green-600 text-green-700 rounded-xl font-bold text-[12px]">Choose Photos (max 3)</button><div id="imgPreview" class="grid grid-cols-3 gap-2 mt-2 hidden"></div><p id="imgCount" class="text-[10px] text-green-600 font-bold mt-2 hidden"></p></div>
-<button onclick="submitAd()" id="submitBtn" class="w-full h-[48px] bg-[#149777] text-white font-black rounded-xl">Post Ad Free</button><p id="postError" class="text-[10px] text-red-500 text-center font-bold"></p></div></div></div>
-
-<div id="loginModal" class="fixed inset-0 bg-white z-[85] hidden flex-col"><div class="flex-1 flex flex-col items-center justify-center p-6"><img src="Logo.jpg" class="w-[240px]" onerror="this.style.display='none'"><h2 class="font-black text-[20px] mt-6">Welcome to MyLanka.lk</h2><button onclick="googleLogin()" class="w-full max-w-[320px] mt-6 h-[48px] border-2 rounded-full font-bold text-[12px] flex items-center justify-center gap-2">Continue with Google</button><button onclick="closeLogin()" class="mt-4 text-[11px] text-gray-400 underline">Skip</button><p id="error" class="text-[10px] text-red-500 mt-3"></p></div></div>
-
-<div id="cartModal" class="fixed inset-0 bg-black/50 z-[90] hidden"><div class="bg-white w-full max-w-[400px] h-full ml-auto flex flex-col"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-bold">Wishlist (<span id="cartCount2">0</span>)</h3><button onclick="closeCart()" class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center">X</button></div><div id="cartItems" class="flex-1 overflow-y-auto p-4"></div><div class="p-4 border-t"><button onclick="closeCart()" class="w-full h-[44px] border-2 rounded-full font-bold text-[12px]">Continue Shopping</button></div></div></div>
-
+<div id="postModal" class="fixed inset-0 bg-black/50 z-[90] hidden items-end sm:items-center justify-center p-0 sm:p-4"><div class="bg-white w-full max-w-[480px] rounded-t-[24px] sm:rounded-[20px] max-h-[90vh] flex flex-col"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-black">Post New Ad</h3><button onclick="closePostModal()" class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center">✕</button></div><div class="p-4 space-y-3 overflow-y-auto flex-1"><select id="pCategory" class="w-full border-2 border-gray-100 p-3 rounded-xl bg-[#fafafa] text-[12px]"><option value="vehicle">Vehicle</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option><option value="home">Home & Kitchen</option><option value="beauty">Beauty</option><option value="grocery">Groceries</option></select><input id="pTitle" placeholder="Title *" class="w-full border-2 border-gray-100 p-3 rounded-xl text-[12px]"><div class="grid grid-cols-2 gap-2"><input id="pPrice" type="number" placeholder="Price Rs *" class="border-2 border-gray-100 p-3 rounded-xl text-[12px]"><input id="pLocation" placeholder="Location *" class="border-2 border-gray-100 p-3 rounded-xl text-[12px]"></div><input id="pPhone" placeholder="Phone 07XXXXXXXX *" class="w-full border-2 border-green-200 p-3 rounded-xl text-[12px] bg-green-50 font-bold"><textarea id="pDesc" placeholder="Full description..." rows="3" class="w-full border-2 border-gray-100 p-3 rounded-xl text-[12px] resize-none"></textarea><div class="border-2 border-dashed border-green-300 rounded-xl p-3 text-center bg-green-50/50"><input id="pImages" type="file" accept="image/*" multiple hidden><button type="button" onclick="document.getElementById('pImages').click()" class="w-full h-[44px] bg-white border-2 border-green-600 text-green-700 rounded-xl font-bold text-[12px]">Choose Photos (max 3)</button><div id="imgPreview" class="grid grid-cols-3 gap-2 mt-2 hidden"></div><p id="imgCount" class="text-[10px] text-green-600 font-bold mt-2 hidden"></p></div><button onclick="submitAd()" id="submitBtn" class="w-full h-[48px] bg-[#00b578] text-white font-black rounded-xl">Post Ad - Free</button><p id="postError" class="text-[10px] text-red-500 text-center font-bold"></p></div></div></div>
+<div id="loginModal" class="fixed inset-0 bg-white z-[85] hidden flex-col"><div class="flex-1 flex flex-col items-center justify-center p-6"><div id="loginLogoWrap" class="mb-6"><img src="Logo.jpg" class="w-[260px] max-w-[80vw] object-contain"></div><h2 class="font-black text-[22px]">Welcome</h2><p class="text-[11px] text-gray-500 mt-1">Login to post ads</p><button onclick="googleLogin()" class="w-full max-w-[320px] mt-6 h-[48px] border-2 border-gray-200 rounded-full font-bold text-[12px] flex items-center justify-center gap-2"><img src="https://www.google.com/favicon.ico" class="w-4 h-4">Continue with Google</button><button onclick="closeLogin()" class="mt-4 text-[11px] text-gray-400 underline">Skip</button><p id="error" class="text-[10px] text-red-500 mt-3 text-center"></p><p id="domainHelp" class="hidden text-[10px] bg-yellow-50 border border-yellow-200 p-3 rounded-xl mt-3">⚠️ Firebase එකේ mylanka-lk.netlify.app Domain එක Add කරන්න: console.firebase.google.com → Authentication → Settings → Authorized domains → Add domain</p></div></div>
+<div id="cartModal" class="fixed inset-0 bg-black/50 z-[90] hidden"><div class="bg-white w-full max-w-[400px] h-full ml-auto flex flex-col"><div class="p-4 border-b flex justify-between items-center"><h3 class="font-black">Cart (<span id="cartCount2">0</span>)</h3><button onclick="closeCart()" class="w-8 h-8 bg-gray-100 rounded-full grid place-items-center">✕</button></div><div id="cartItems" class="flex-1 overflow-y-auto p-4"></div><div class="p-4 border-t bg-[#fafafa]"><div class="flex justify-between font-black"><span>Subtotal</span><span id="cartSubtotal" class="text-[#ff6a00]">Rs. 0</span></div><button onclick="checkout()" class="w-full mt-3 h-[48px] bg-[#ff6a00] text-white font-black rounded-full">Checkout</button></div></div></div>
 <script type="module">
 import {initializeApp} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
 import {getFirestore,collection,addDoc,query,orderBy,onSnapshot,deleteDoc,doc} from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 const cfg={apiKey:"AIzaSyBCTh5NJgnhcXec_FMfpvFOuccBLxpHfxQ",authDomain:"mylanka-lk.firebaseapp.com",projectId:"mylanka-lk",storageBucket:"mylanka-lk.firebasestorage.app",messagingSenderId:"403802424795",appId:"1:403802424795:web:6736366578096ff129d3fe"};
 const app=initializeApp(cfg);const auth=getAuth(app);const db=getFirestore(app);
-let allProducts=[],cart=JSON.parse(localStorage.getItem('mylanka_saved')||'[]'),currentFilter='all',currentSearch='',selectedBase64=[],currentDeleteId=null,currentDetailId=null,currentImages=[],currentImgIndex=0,isGrid=false;
+let allProducts=[],cart=JSON.parse(localStorage.getItem('mylanka_cart')||'[]'),currentFilter='all',currentSearch='',selectedBase64=[],currentDeleteId=null,currentDetailId=null,currentImages=[],currentImgIndex=0;
 const categories=['all','vehicle','electronics','fashion','home','beauty','grocery'];
-let currentCatIndex=0;let bannerIndex=0;
-const bannerTrack=document.getElementById('bannerTrack');const bannerWrapper=document.getElementById('bannerWrapper');
-function updateBanner(){if(!bannerTrack) return;bannerTrack.style.transform='translateX(-'+(bannerIndex*33.333)+'%)';document.querySelectorAll('.banner-dot').forEach((d,i)=>{d.classList.toggle('active',i===bannerIndex);});}
-setInterval(()=>{if(currentFilter==='all'){bannerIndex=(bannerIndex+1)%3;updateBanner();}},3500);
-let bannerStartX=0;const bc=document.getElementById('bannerContainer');
-if(bc){bc.addEventListener('touchstart',e=>{bannerStartX=e.touches[0].clientX},{passive:true});
-bc.addEventListener('touchend',e=>{let diff=e.changedTouches[0].clientX-bannerStartX;if(Math.abs(diff)>50){if(diff<0) bannerIndex=(bannerIndex+1)%3; else bannerIndex=(bannerIndex-1+3)%3;updateBanner();}},{passive:true});}
-setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('splash-hide');setTimeout(()=>s.style.display='none',500);}},2000);
+let currentCatIndex=0;
+setTimeout(()=>{const s=document.getElementById('splash');if(s){s.classList.add('splash-hide');setTimeout(()=>s.style.display='none',500);}},2200);
 const q=query(collection(db,"products"),orderBy("createdAt","desc"));
 onSnapshot(q,(snap)=>{allProducts=snap.docs.map(d=>({id:d.id,...d.data()}));render();updateCartUI();});
 onAuthStateChanged(auth,(u)=>{if(u)closeLogin();});
 function render(){
 let list=[...allProducts];
 if(currentFilter!=='all') list=list.filter(p=>p.category===currentFilter);
-if(currentSearch){const t=currentSearch.toLowerCase();list=list.filter(p=> (p.title||'').toLowerCase().includes(t) || (p.description||'').toLowerCase().includes(t));}
-const grid=document.getElementById('grid');const grid2=document.getElementById('grid2');const empty=document.getElementById('emptyState');
-const ind=document.getElementById('swipeIndicator');const title=document.getElementById('freshTitle');
-const catName=currentFilter==='all'?'All':currentFilter.charAt(0).toUpperCase()+currentFilter.slice(1);
-if(ind) ind.innerText=catName+' - '+(isGrid?'Grid':'Swipe');if(title) title.innerText=currentFilter==='all'?'Fresh Recommendations':catName+' Ads';
-if(document.getElementById('emptyCat')) document.getElementById('emptyCat').innerText=catName;
-if(bannerWrapper){if(currentFilter==='all'){bannerWrapper.classList.remove('hidden-banner');bannerWrapper.style.height='160px';}else{bannerWrapper.classList.add('hidden-banner');bannerWrapper.style.height='0px';}}
-if(list.length===0){if(grid) grid.innerHTML='';if(grid2) grid2.innerHTML='';if(empty) empty.classList.remove('hidden');return;}
-if(empty) empty.classList.add('hidden');
-const cardHTML=(p)=>`
-<div onclick="openDetail('${p.id}')" class="ikman-card cursor-pointer ${isGrid?'':'min-w-[150px] w-[150px] flex-shrink-0'}">
-<div class="w-full ${isGrid?'h-[140px]':'h-[110px]'} bg-[#fafafa] overflow-hidden relative">
-<img src="${p.image}" class="w-full h-full object-cover" loading="lazy">
-<span class="absolute top-1.5 left-1.5 bg-[#ff4747] text-white text-[8px] font-black px-1.5 py-0.5 rounded">-12%</span>
-<div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-1.5 flex justify-between items-end">
-<span class="text-white text-[8px] font-bold">24 Sold</span><span class="text-white text-[8px]">4.8</span>
-</div></div>
-<div class="p-2">
-<p class="text-[11px] font-medium leading-[13px] h-[26px] overflow-hidden text-[#222] line-clamp-2">${p.title}</p>
-<div class="flex items-center gap-1 mt-1"><p class="ali-price text-[13px]">Rs. ${Number(p.price).toLocaleString()}</p><span class="text-[9px] text-gray-400 line-through">Rs. ${(Number(p.price)*1.12).toFixed(0)}</span></div>
-<p class="text-[9px] text-[#00a65a] mt-0.5">Free Delivery - ${p.location||'Sri Lanka'}</p>
-</div></div>`;
-if(isGrid){if(grid) grid.classList.add('hidden');if(grid2){grid2.classList.remove('hidden');grid2.innerHTML=list.map(cardHTML).join('');}}
-else{if(grid2) grid2.classList.add('hidden');if(grid){grid.classList.remove('hidden');grid.innerHTML=list.map(cardHTML).join('');}}
+if(currentSearch){
+const term=currentSearch.toLowerCase();
+list=list.filter(p=> (p.title||'').toLowerCase().includes(term) || (p.description||'').toLowerCase().includes(term) || (p.location||'').toLowerCase().includes(term));
 }
-window.toggleView=()=>{isGrid=!isGrid;document.getElementById('viewBtn').innerText=isGrid?'Switch to Swipe View':'Switch to Grid View';render();};
-window.filterCat=(c)=>{currentFilter=c;currentCatIndex=categories.indexOf(c);document.querySelectorAll('.cat-chip').forEach(b=>b.classList.remove('active'));const a=document.getElementById('cat-'+c);if(a){a.classList.add('active');a.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}render();window.scrollTo({top:0,behavior:'smooth'});};
-window.doSearch=(v)=>{currentSearch=v.trim();render();};
-window.openDetail=(id)=>{let p=allProducts.find(x=>x.id===id);if(!p) return;currentDetailId=id;currentDeleteId=id;currentImages=p.images&&p.images.length>0?p.images:[p.image];currentImgIndex=0;updateDetailImage();
-document.getElementById('dTitle').innerText=p.title||'';document.getElementById('dPrice').innerText='Rs. '+Number(p.price).toLocaleString();document.getElementById('dLocation').innerText=p.location||'Sri Lanka';document.getElementById('dDesc').innerText=p.description||p.title||'';
-const box=document.getElementById('dPhoneBox');if(p.phone&&box){box.classList.remove('hidden');document.getElementById('dPhone').innerText=p.phone;document.getElementById('dCallBtn').href='tel:'+p.phone;let num=p.phone.replace(/[^0-9]/g,'');if(num.startsWith('0')) num='94'+num.slice(1);document.getElementById('dWhatsappBtn').href='https://wa.me/'+num;}else if(box) box.classList.add('hidden');
-const more=document.getElementById('dMoreImgs');if(more) more.innerHTML=currentImages.map((im,idx)=>`<img src="${im}" class="w-[52px] h-[52px] rounded-lg object-cover border-2 ${idx===0?'border-[#ff6a00]':'border-transparent'} cursor-pointer flex-shrink-0" onclick="jumpToImage(${idx})">`).join('');
-document.getElementById('detailModal').classList.remove('hidden');document.body.style.overflow='hidden';const delBtn=document.getElementById('delBtn');if(delBtn){if(auth.currentUser && p.user===auth.currentUser.uid) delBtn.classList.remove('hidden'); else delBtn.classList.add('hidden');}};
-function updateDetailImage(){const img=document.getElementById('dImage');const counter=document.getElementById('imgCounter');if(img) img.src=currentImages[currentImgIndex]||'';if(counter) counter.innerText=(currentImgIndex+1)+' / '+currentImages.length;}
+const grid=document.getElementById('grid');const empty=document.getElementById('emptyState');
+const ind=document.getElementById('swipeIndicator');
+const catName=currentFilter==='all'?'All':currentFilter.charAt(0).toUpperCase()+currentFilter.slice(1);
+if(ind) ind.innerText=catName;
+if(document.getElementById('emptyCat')) document.getElementById('emptyCat').innerText=catName;
+const searchEmpty=document.getElementById('searchEmpty');
+const searchTermEl=document.getElementById('searchTerm');
+const clearBtn=document.getElementById('clearSearchBtn');
+if(currentSearch){
+if(clearBtn) clearBtn.classList.remove('hidden');
+if(searchTermEl) searchTermEl.innerText=currentSearch;
+}else{
+if(clearBtn) clearBtn.classList.add('hidden');
+}
+if(!grid) return;
+if(list.length===0){
+grid.innerHTML='';
+if(empty){
+empty.classList.remove('hidden');
+if(currentSearch && searchEmpty){searchEmpty.classList.remove('hidden');}else if(searchEmpty){searchEmpty.classList.add('hidden');}
+}
+return;
+}
+if(empty) empty.classList.add('hidden');
+grid.innerHTML=list.map(p=>`
+<div onclick="openDetail('${p.id}')" class="premium-card cursor-pointer">
+<div class="w-full h-[100px] bg-[#fafafa] overflow-hidden">
+<img src="${p.image}" class="w-full h-full object-cover" loading="lazy" onerror="this.src='https://via.placeholder.com/200'">
+</div>
+<div class="p-2">
+<p class="text-[11px] font-bold leading-[13px] h-[26px] overflow-hidden text-[#222]">${p.title}</p>
+<p class="text-[#e53900] font-black text-[12px] mt-1 truncate">LKR ${Number(p.price).toLocaleString()}</p>
+</div>
+</div>`).join('');
+}
+window.filterCat=(c)=>{
+currentFilter=c;
+currentCatIndex=categories.indexOf(c);
+if(currentCatIndex<0) currentCatIndex=0;
+document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+const active=document.getElementById('cat-'+c);
+if(active){active.classList.add('active');active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}
+render();
+};
+window.doSearch=(v)=>{
+currentSearch=v.trim();
+render();
+};
+window.clearSearch=()=>{
+currentSearch='';
+document.getElementById('searchInput').value='';
+render();
+};
+const gridEl=document.getElementById('grid');
+let startX=0,startY=0,isSwiping=false,didSwipe=false;
+function handleTouchStart(e){
+startX=e.touches?e.touches[0].clientX:e.clientX;
+startY=e.touches?e.touches[0].clientY:e.clientY;
+isSwiping=false;didSwipe=false;
+}
+function handleTouchMove(e){
+if(!startX) return;
+let curX=e.touches?e.touches[0].clientX:e.clientX;
+let curY=e.touches?e.touches[0].clientY:e.clientY;
+let diffX=curX-startX;
+let diffY=curY-startY;
+if(Math.abs(diffX)>40 && Math.abs(diffX)>Math.abs(diffY)){
+isSwiping=true;
+}
+}
+function handleTouchEnd(e){
+if(!isSwiping){startX=0;return;}
+let endX=e.changedTouches?e.changedTouches[0].clientX:e.clientX;
+let diff=endX-startX;
+if(Math.abs(diff)>90){
+didSwipe=true;
+e.preventDefault();
+if(diff<0){currentCatIndex=(currentCatIndex+1)%categories.length;}else{currentCatIndex=(currentCatIndex-1+categories.length)%categories.length;}
+filterCat(categories[currentCatIndex]);
+if(gridEl){gridEl.style.transform=diff<0?'translateX(-30px)':'translateX(30px)';setTimeout(()=>gridEl.style.transform='translateX(0)',250);}
+}
+startX=0;isSwiping=false;
+setTimeout(()=>didSwipe=false,300);
+}
+if(gridEl){
+gridEl.addEventListener('touchstart',handleTouchStart,{passive:true});
+gridEl.addEventListener('touchmove',handleTouchMove,{passive:true});
+gridEl.addEventListener('touchend',handleTouchEnd,{passive:false});
+gridEl.addEventListener('mousedown',handleTouchStart);
+gridEl.addEventListener('mousemove',(e)=>{if(startX) handleTouchMove(e);});
+gridEl.addEventListener('mouseup',handleTouchEnd);
+}
+const pImagesInput=document.getElementById('pImages');const previewEl=document.getElementById('imgPreview');const countEl=document.getElementById('imgCount');
+if(pImagesInput){pImagesInput.addEventListener('change',async(e)=>{let files=Array.from(e.target.files).slice(0,3);selectedBase64=[];if(previewEl) previewEl.innerHTML='';for(let f of files){let b64=await toResized(f);selectedBase64.push(b64);if(previewEl) previewEl.innerHTML+=`<img src="${b64}" class="w-full h-[60px] object-cover rounded-lg border">`;}if(previewEl) previewEl.classList.remove('hidden');if(countEl){countEl.innerText=selectedBase64.length+' Photos Ready';countEl.classList.remove('hidden');}});}
+function toResized(file){return new Promise(r=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>{const c=document.createElement('canvas');let w=i.width,h=i.height;const m=700;if(w>m){h=h*m/w;w=m;}if(h>m){w=w*m/h;h=m;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',0.55));};i.src=u;});}
+window.openDetail=(id)=>{
+if(didSwipe) return;
+let p=allProducts.find(x=>x.id===id);if(!p) return;
+currentDetailId=id;currentDeleteId=id;
+currentImages=p.images&&p.images.length>0?p.images:[p.image];
+currentImgIndex=0;
+updateDetailImage();
+document.getElementById('dTitle').innerText=p.title||'';
+document.getElementById('dPrice').innerText='LKR '+Number(p.price).toLocaleString();
+document.getElementById('dLocation').innerText='📍 '+(p.location||'Sri Lanka');
+document.getElementById('dDesc').innerText=p.description||p.title||'';
+const box=document.getElementById('dPhoneBox');
+if(p.phone&&box){box.classList.remove('hidden');document.getElementById('dPhone').innerText=p.phone;document.getElementById('dCallBtn').href='tel:'+p.phone;let num=p.phone.replace(/[^0-9]/g,'');if(num.startsWith('0')) num='94'+num.slice(1);document.getElementById('dWhatsappBtn').href='https://wa.me/'+num;}else if(box) box.classList.add('hidden');
+document.getElementById('dEmail').innerText=p.email||'';
+const more=document.getElementById('dMoreImgs');
+if(more) more.innerHTML=currentImages.map((im,idx)=>`<img src="${im}" class="w-[52px] h-[52px] rounded-lg object-cover border-2 ${idx===0?'border-[#ff6a00]':'border-transparent'} cursor-pointer flex-shrink-0" onclick="jumpToImage(${idx})" id="thumb-${idx}">`).join('');
+const del=document.getElementById('deleteBtn');
+if(del){if(auth.currentUser&&p.user===auth.currentUser.uid) del.classList.remove('hidden');else del.classList.add('hidden');}
+document.getElementById('detailModal').classList.remove('hidden');
+document.body.style.overflow='hidden';
+};
+function updateDetailImage(){
+const img=document.getElementById('dImage');
+const counter=document.getElementById('imgCounter');
+if(img) img.src=currentImages[currentImgIndex]||'';
+if(counter) counter.innerText=(currentImgIndex+1)+' / '+currentImages.length;
+}
 window.swipeImage=(dir)=>{currentImgIndex=(currentImgIndex+dir+currentImages.length)%currentImages.length;updateDetailImage();};
-window.jumpToImage=(idx)=>{currentImgIndex=idx;updateDetailImage();};window.closeDetail=()=>{document.getElementById('detailModal').classList.add('hidden');document.body.style.overflow='';};
-window.addToCartFromDetail=()=>{if(!currentDetailId) return;let p=allProducts.find(x=>x.id===currentDetailId);if(!p) return;if(cart.find(i=>i.id===currentDetailId)){alert('Already in Wishlist!');return;}cart.push({id:currentDetailId,title:p.title,price:Number(p.price),image:p.image,phone:p.phone});localStorage.setItem('mylanka_saved',JSON.stringify(cart));updateCartUI();alert('Added to Wishlist');};
+window.jumpToImage=(idx)=>{currentImgIndex=idx;updateDetailImage();};
+window.closeDetail=()=>{document.getElementById('detailModal').classList.add('hidden');document.body.style.overflow='';};
+window.addToCartFromDetail=()=>{
+if(!currentDetailId) return;
+let p=allProducts.find(x=>x.id===currentDetailId);if(!p) return;
+let it=cart.find(i=>i.id===currentDetailId);
+if(it) it.qty++; else cart.push({id:currentDetailId,title:p.title,price:Number(p.price),image:p.image,qty:1});
+localStorage.setItem('mylanka_cart',JSON.stringify(cart));
+updateCartUI();alert('Added to Cart ✓');openCart();
+};
+window.contactSellerDirect=()=>{const box=document.getElementById('dPhoneBox');if(box) box.scrollIntoView({behavior:'smooth'});};
 window.deleteMyAd=async()=>{if(!currentDeleteId) return;if(!confirm('Delete?')) return;await deleteDoc(doc(db,"products",currentDeleteId));closeDetail();};
 window.openPostModal=()=>{if(!auth.currentUser){openLogin();return;}document.getElementById('postModal').classList.remove('hidden');document.getElementById('postModal').classList.add('flex');};
 window.closePostModal=()=>{document.getElementById('postModal').classList.add('hidden');document.getElementById('postModal').classList.remove('flex');};
-function toResized(file){return new Promise(r=>{const u=URL.createObjectURL(file);const i=new Image();i.onload=()=>{const c=document.createElement('canvas');let w=i.width,h=i.height;const m=700;if(w>m){h=h*m/w;w=m;}if(h>m){w=w*m/h;h=m;}c.width=w;c.height=h;c.getContext('2d').drawImage(i,0,0,w,h);URL.revokeObjectURL(u);r(c.toDataURL('image/jpeg',0.55));};i.src=u;});}
-const pImagesInput=document.getElementById('pImages');const previewEl=document.getElementById('imgPreview');const countEl=document.getElementById('imgCount');
-if(pImagesInput){pImagesInput.addEventListener('change',async(e)=>{let files=Array.from(e.target.files).slice(0,3);selectedBase64=[];if(previewEl) previewEl.innerHTML='';for(let f of files){let b64=await toResized(f);selectedBase64.push(b64);if(previewEl) previewEl.innerHTML+=`<img src="${b64}" class="w-full h-[60px] object-cover rounded-lg border">`;}if(previewEl) previewEl.classList.remove('hidden');if(countEl){countEl.innerText=selectedBase64.length+' Photos Ready';countEl.classList.remove('hidden');}});}
-window.submitAd=async()=>{try{const title=document.getElementById('pTitle').value.trim();const price=document.getElementById('pPrice').value;const loc=document.getElementById('pLocation').value.trim();const phone=document.getElementById('pPhone').value.trim();const cat=document.getElementById('pCategory').value;const desc=document.getElementById('pDesc').value.trim();const err=document.getElementById('postError');if(!title||!price||!loc||!phone){if(err) err.innerText='Fill all fields!';return;}if(selectedBase64.length===0){if(err) err.innerText='Choose photo!';return;}const btn=document.getElementById('submitBtn');btn.innerText='Posting...';btn.disabled=true;await addDoc(collection(db,"products"),{title,price:Number(price),location:loc,phone:phone.replace(/[^0-9+]/g,''),category:cat,description:desc,image:selectedBase64[0],images:selectedBase64,createdAt:Date.now(),user:auth.currentUser.uid,email:auth.currentUser.email||''});alert('Posted!');closePostModal();document.getElementById('pTitle').value='';document.getElementById('pPrice').value='';document.getElementById('pLocation').value='';document.getElementById('pPhone').value='';document.getElementById('pDesc').value='';selectedBase64=[];if(previewEl){previewEl.innerHTML='';previewEl.classList.add('hidden');}if(countEl) countEl.classList.add('hidden');btn.innerText='Post Ad Free';btn.disabled=false;}catch(e){document.getElementById('postError').innerText=e.message;const b=document.getElementById('submitBtn');if(b){b.innerText='Post Ad Free';b.disabled=false;}}};
-window.openLogin=()=>{const m=document.getElementById('loginModal');if(m){m.classList.remove('hidden');m.classList.add('flex');}};window.closeLogin=()=>{const m=document.getElementById('loginModal');if(m){m.classList.add('hidden');m.classList.remove('flex');}};
-window.googleLogin=async()=>{try{await signInWithPopup(auth,new GoogleAuthProvider());closeLogin();}catch(e){document.getElementById('error').innerText=e.message;}};
-function updateCartUI(){const total=cart.length;const c1=document.getElementById('cartCount');const c2=document.getElementById('cartCount2');if(c1) c1.innerText=total;if(c2) c2.innerText=total;const el=document.getElementById('cartItems');if(!el) return;if(cart.length===0){el.innerHTML='<div class="text-center py-16"><p class="text-[40px]">♥</p><p class="font-bold mt-2 text-[13px]">No saved items</p></div>';}else{el.innerHTML=cart.map(i=>`<div class="flex gap-3 border-b pb-3 mb-3"><img src="${i.image}" class="w-[64px] h-[64px] rounded-xl object-cover"><div class="flex-1"><p class="text-[11px] font-bold line-clamp-2">${i.title}</p><p class="text-[11px] text-[#ff4747] font-black mt-1">Rs. ${Number(i.price).toLocaleString()}</p><div class="flex gap-2 mt-2"><a href="tel:${i.phone}" class="text-[10px] bg-[#149777] text-white px-3 py-1 rounded-full font-bold">Call</a><button onclick="removeFromCart('${i.id}')" class="text-[10px] text-red-500 font-bold">Remove</button></div></div></div>`).join('');}}
-window.removeFromCart=(id)=>{cart=cart.filter(i=>i.id!==id);localStorage.setItem('mylanka_saved',JSON.stringify(cart));updateCartUI();};
-window.openCart=()=>{document.getElementById('cartModal').classList.remove('hidden');updateCartUI();};window.closeCart=()=>{document.getElementById('cartModal').classList.add('hidden');};window.contactSellerDirect=()=>{const b=document.getElementById('dPhoneBox');if(b) b.scrollIntoView({behavior:'smooth'});};
-const gridEl=document.getElementById('grid');let startX=0,isSwiping=false,didSwipe=false;
-function hTS(e){startX=e.touches?e.touches[0].clientX:e.clientX;isSwiping=false;didSwipe=false;}
-function hTM(e){if(!startX) return;let curX=e.touches?e.touches[0].clientX:e.clientX;if(Math.abs(curX-startX)>40) isSwiping=true;}
-function hTE(e){if(!isSwiping){startX=0;return;}let endX=e.changedTouches?e.changedTouches[0].clientX:e.clientX;let diff=endX-startX;if(Math.abs(diff)>90){didSwipe=true;if(diff<0){currentCatIndex=(currentCatIndex+1)%categories.length;}else{currentCatIndex=(currentCatIndex-1+categories.length)%categories.length;}filterCat(categories[currentCatIndex]);}startX=0;isSwiping=false;setTimeout(()=>didSwipe=false,300);}
-if(gridEl){gridEl.addEventListener('touchstart',hTS,{passive:true});gridEl.addEventListener('touchmove',hTM,{passive:true});gridEl.addEventListener('touchend',hTE,{passive:false});}
+window.submitAd=async()=>{try{const title=document.getElementById('pTitle').value.trim();const price=document.getElementById('pPrice').value;const loc=document.getElementById('pLocation').value.trim();const phone=document.getElementById('pPhone').value.trim();const cat=document.getElementById('pCategory').value;const desc=document.getElementById('pDesc').value.trim();const err=document.getElementById('postError');if(!title||!price||!loc||!phone){if(err) err.innerText='Fill all!';return;}if(selectedBase64.length===0){if(err) err.innerText='Choose photo!';return;}const btn=document.getElementById('submitBtn');btn.innerText='Posting...';btn.disabled=true;await addDoc(collection(db,"products"),{title,price:Number(price),location:loc,phone:phone.replace(/[^0-9+]/g,''),category:cat,description:desc,image:selectedBase64[0],images:selectedBase64,createdAt:Date.now(),user:auth.currentUser.uid,email:auth.currentUser.email||''});alert('Posted!');closePostModal();document.getElementById('pTitle').value='';document.getElementById('pPrice').value='';document.getElementById('pLocation').value='';document.getElementById('pPhone').value='';document.getElementById('pDesc').value='';selectedBase64=[];if(previewEl){previewEl.innerHTML='';previewEl.classList.add('hidden');}if(countEl) countEl.classList.add('hidden');btn.innerText='Post Ad - Free';btn.disabled=false;}catch(e){document.getElementById('postError').innerText=e.message;const b=document.getElementById('submitBtn');if(b){b.innerText='Post Ad - Free';b.disabled=false;}}};
+window.openLogin=()=>{const m=document.getElementById('loginModal');const w=document.getElementById('loginLogoWrap');if(m){m.classList.remove('hidden');m.classList.add('flex');if(w){w.classList.remove('logo-drop');void w.offsetWidth;w.classList.add('logo-drop');}}};
+window.closeLogin=()=>{const m=document.getElementById('loginModal');if(m){m.classList.add('hidden');m.classList.remove('flex');}};
+window.googleLogin=async()=>{
+const errEl=document.getElementById('error');
+const helpEl=document.getElementById('domainHelp');
+const ls=document.getElementById('loginSplash');const ll=document.getElementById('loginSplashLogo');
+try{
+if(ls&&ll){ls.classList.remove('hidden');ls.classList.add('flex');ll.classList.remove('logo-drop');void ll.offsetWidth;ll.classList.add('logo-drop');}
+await signInWithPopup(auth,new GoogleAuthProvider());
+if(ls){ls.classList.add('hidden');ls.classList.remove('flex');}
+closeLogin();
+}catch(e){
+if(ls){ls.classList.add('hidden');ls.classList.remove('flex');}
+if(errEl) errEl.innerText=e.message;
+if(e.message.includes('unauthorized-domain') && helpEl){helpEl.classList.remove('hidden');}
+}};
+function updateCartUI(){const total=cart.reduce((s,i)=>s+i.qty,0);const sub=cart.reduce((s,i)=>s+i.price*i.qty,0);document.getElementById('cartCount').innerText=total;document.getElementById('cartCount2').innerText=total;document.getElementById('cartSubtotal').innerText='Rs. '+sub.toLocaleString();const el=document.getElementById('cartItems');if(!el) return;if(cart.length===0){el.innerHTML='<div class="text-center py-20"><p class="text-[40px]">🛒</p><p class="font-bold mt-2">Cart empty</p></div>';}else{el.innerHTML=cart.map(i=>`<div class="flex gap-3 border-b pb-3 mb-3"><img src="${i.image}" class="w-[60px] h-[60px] rounded-lg object-cover"><div class="flex-1"><p class="text-[11px] font-bold line-clamp-2">${i.title}</p><p class="text-[11px] text-[#e53900] font-black">LKR ${Number(i.price).toLocaleString()} x ${i.qty}</p><div class="flex gap-2 mt-1 items-center"><button onclick="changeQty('${i.id}',-1)" class="w-6 h-6 bg-gray-100 rounded-full grid place-items-center font-bold">-</button><span class="text-[11px] font-bold">${i.qty}</span><button onclick="changeQty('${i.id}',1)" class="w-6 h-6 bg-gray-100 rounded-full grid place-items-center font-bold">+</button><button onclick="removeFromCart('${i.id}')" class="ml-auto text-[10px] text-red-500 font-bold">Remove</button></div></div></div>`).join('');}}
+window.changeQty=(id,d)=>{let it=cart.find(i=>i.id===id);if(!it) return;it.qty+=d;if(it.qty<=0) cart=cart.filter(i=>i.id!==id);localStorage.setItem('mylanka_cart',JSON.stringify(cart));updateCartUI();};
+window.removeFromCart=(id)=>{cart=cart.filter(i=>i.id!==id);localStorage.setItem('mylanka_cart',JSON.stringify(cart));updateCartUI();};
+window.openCart=()=>{document.getElementById('cartModal').classList.remove('hidden');updateCartUI();};
+window.closeCart=()=>{document.getElementById('cartModal').classList.add('hidden');};
+window.checkout=()=>{if(cart.length===0) return;alert('Order placed! Total: Rs.'+cart.reduce((s,i)=>s+i.price*i.qty,0).toLocaleString());cart=[];localStorage.setItem('mylanka_cart','[]');updateCartUI();closeCart();};
 updateCartUI();
-</script></body></html>
+</script>
+</body>
+</html>
