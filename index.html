@@ -2,33 +2,36 @@
 <html lang="si">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MyLanka.lk - Classified Ads Marketplace</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MyLanka.lk - Classified Marketplace</title>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}
-body{background:#f5f5f5}
-#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:all.7s ease}
-#splash.hide{opacity:0;transform:scale(1.15);pointer-events:none}
-.splash-logo-wrap{width:280px;animation:pop.9s ease}.splash-logo-wrap img{width:100%}
-.splash-loader{margin-top:35px;width:60px;height:4px;background:#f0f0f0;border-radius:10px;overflow:hidden;position:relative}
-.splash-loader::after{content:'';position:absolute;left:0;top:0;height:100%;width:50%;background:#ff6a00;animation:load 1.2s infinite}
-@keyframes pop{0%{transform:scale(.6);opacity:0}100%{transform:scale(1);opacity:1}} @keyframes load{0%{left:-50%}100%{left:100%}}
-.header{background:#fff;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 1px 5px rgba(0,0,0,.05)}.header-logo{height:44px}.header-logo img{height:100%}
-.login-btn{background:#ff6a00;color:#fff;border:none;padding:8px 18px;border-radius:20px;font-weight:700;font-size:13px;cursor:pointer}
-.search-wrap{padding:0 15px 12px;background:#fff}.search-box{background:#f0f2f5;border-radius:25px;display:flex;align-items:center;padding:12px 18px}.search-box input{border:none;background:transparent;width:100%;outline:none;font-size:15px;margin-left:10px}
-.banner-wrap{padding:12px 15px;background:#fff;margin-top:5px;transition:.3s}.banner-wrap.hide{display:none}.banner{width:100%;height:150px;border-radius:16px;background:linear-gradient(135deg,#0a5c36 0%,#ff6a00 100%);display:flex;align-items:center;padding:0 20px;color:#fff;position:relative;overflow:hidden}.banner-text h3{font-size:20px;font-weight:800}.banner-text p{font-size:13px;margin-top:4px;opacity:.9}
-.categories{padding:12px 0 12px 15px;background:#fff;margin-top:5px;position:sticky;top:58px;z-index:90}.cat-list{display:flex;gap:12px;overflow-x:auto;padding-right:15px}.cat-list::-webkit-scrollbar{display:none}.cat-item{text-align:center;min-width:70px;cursor:pointer;flex-shrink:0}.cat-icon{width:58px;height:58px;background:#f9f9f9;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;border:1px solid #eee;transition:.2s}.cat-item.active.cat-icon{background:#fff3eb;border-color:#ff6a00}.cat-item.active p{color:#ff6a00;font-weight:700}.cat-item p{font-size:12px;margin-top:5px}
-.products{padding:15px 15px 100px;min-height:60vh}.sec-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;justify-content:space-between}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.06);cursor:pointer}.card-img{height:145px;background:#eee}.card-img img{width:100%;height:100%;object-fit:cover}.card-body{padding:10px}.card-title{font-size:13px;font-weight:600;height:34px;overflow:hidden}.card-price{color:#ff6a00;font-weight:800;margin-top:4px}.card-loc{font-size:11px;color:#777}.add-btn{position:fixed;bottom:25px;right:20px;width:60px;height:60px;background:#ff6a00;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;border:none;z-index:90;box-shadow:0 4px 12px rgba(255,106,0,.4)}.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end}.modal.active{display:flex}.modal-box{background:#fff;width:100%;max-height:92vh;border-radius:20px 20px 0 0;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;padding:15px;border-bottom:1px solid #eee;font-weight:700}.input{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:10px;margin-top:10px;font-size:14px;outline:none}.btn-main{width:100%;background:#ff6a00;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700;margin-top:18px}.view-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:300;display:none;overflow-y:auto}.view-modal.active{display:block}.view-img{width:100%;height:340px;background:#f0f0f0}.view-img img{width:100%;height:100%;object-fit:contain}.swipe-indicator{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.85);color:#fff;padding:12px 20px;border-radius:25px;font-size:14px;font-weight:700;z-index:500;display:none}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',sans-serif}body{background:#f5f5f5}
+#splash{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;transition:.7s}
+#splash.hide{opacity:0;pointer-events:none}.splash-logo{width:320px}.splash-logo img{width:100%;max-height:200px;object-fit:contain}.splash-loader{margin-top:30px;width:70px;height:4px;background:#eee;border-radius:10px;overflow:hidden;position:relative}.splash-loader:after{content:'';position:absolute;left:0;top:0;height:100%;width:50%;background:#ff6a00;animation:ld 1.2s infinite}@keyframes ld{0%{left:-50%}100%{left:100%}}
+.header{background:#fff;padding:10px 15px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:100;box-shadow:0 1px 5px rgba(0,0,0,.05)}.header-logo{height:50px}.header-logo img{height:100%;object-fit:contain}.login-btn{background:#ff6a00;color:#fff;border:none;padding:8px 18px;border-radius:20px;font-weight:700}
+.search-wrap{padding:0 15px 12px;background:#fff}.search-box{background:#f0f2f5;border-radius:25px;display:flex;align-items:center;padding:12px 18px}.search-box input{border:none;background:transparent;width:100%;outline:none;margin-left:10px}
+.banner-wrap{padding:12px 15px;background:#fff;margin-top:5px}.banner-wrap.hide{display:none}.banner{width:100%;height:150px;border-radius:16px;background:linear-gradient(135deg,#0a5c36,#ff6a00);display:flex;align-items:center;padding:0 20px;color:#fff}
+.categories{padding:12px 0 12px 15px;background:#fff;margin-top:5px;position:sticky;top:58px;z-index:90}.cat-list{display:flex;gap:12px;overflow-x:auto}.cat-list::-webkit-scrollbar{display:none}.cat-item{text-align:center;min-width:70px;cursor:pointer}.cat-icon{width:58px;height:58px;background:#f9f9f9;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:26px;border:1px solid #eee;transition:.2s}.cat-item.active.cat-icon{background:#fff3eb;border-color:#ff6a00}.cat-item.active p{color:#ff6a00;font-weight:700}.cat-item p{font-size:12px;margin-top:5px}
+.products{padding:15px 15px 100px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.card{background:#fff;border-radius:12px;overflow:hidden;box-shadow:0 2px 6px rgba(0,0,0,.06);cursor:pointer}.card-img{height:145px;background:#eee;position:relative}.card-img img{width:100%;height:100%;object-fit:cover}.img-count{position:absolute;bottom:6px;right:6px;background:rgba(0,0,0,.7);color:#fff;padding:2px 6px;border-radius:10px;font-size:10px}
+.card-body{padding:10px}.card-title{font-size:13px;font-weight:600;height:34px;overflow:hidden}.card-price{color:#ff6a00;font-weight:800}.card-loc{font-size:11px;color:#777}
+.add-btn{position:fixed;bottom:25px;right:20px;width:60px;height:60px;background:#ff6a00;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-size:32px;border:none;z-index:90}
+.modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.5);z-index:200;display:none;align-items:flex-end}.modal.active{display:flex}.modal-box{background:#fff;width:100%;max-height:92vh;border-radius:20px 20px 0 0;overflow-y:auto}.modal-header{display:flex;justify-content:space-between;padding:15px;border-bottom:1px solid #eee;font-weight:700}.input{width:100%;padding:12px 15px;border:1px solid #ddd;border-radius:10px;margin-top:10px;outline:none}
+.upload-area{margin-top:14px;border:2px dashed #ff6a00;background:#fff8f2;border-radius:16px;padding:18px;text-align:center;cursor:pointer}.upload-area h4{color:#ff6a00;font-weight:800}.upload-area p{font-size:12px;color:#888;margin-top:4px}
+.preview-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:12px}.preview-box{position:relative;height:100px;border-radius:12px;overflow:hidden;background:#f0f0f0}.preview-box img{width:100%;height:100%;object-fit:cover}.del{position:absolute;top:4px;right:4px;background:rgba(0,0,0,.7);color:#fff;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;cursor:pointer;z-index:2}.preview-box.add-more{border:2px dashed #ddd;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#999;cursor:pointer}
+.btn-main{width:100%;background:#ff6a00;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700;margin-top:18px}
+.view-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:#fff;z-index:300;display:none;overflow-y:auto}.view-modal.active{display:block}
+.view-img-wrap{width:100%;height:380px;background:#000;position:relative;overflow:hidden}.view-img-wrap img{width:100%;height:100%;object-fit:contain}.view-nav{position:absolute;top:50%;transform:translateY(-50%);background:rgba(0,0,0,.5);color:#fff;width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}.view-nav.left{left:12px}.view-nav.right{right:12px}.view-dots{display:flex;justify-content:center;gap:6px;position:absolute;bottom:12px;left:0;width:100%}.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,.5)}.dot.active{background:#ff6a00}
+.swipe-indicator{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(0,0,0,.85);color:#fff;padding:12px 20px;border-radius:25px;font-size:14px;font-weight:700;z-index:500;display:none}
 </style>
 </head>
 <body>
-<div id="splash"><div class="splash-logo-wrap"><img src="/logo.png" alt="MyLanka.lk Logo"></div><div class="splash-loader"></div></div>
-<div class="header"><div class="header-logo"><img src="/logo.png" alt="MyLanka.lk Logo"></div><button class="login-btn" id="loginBtn"><span id="loginText">Login</span></button></div>
+<div id="splash"><div class="splash-logo"><img src="Logo.jpg" onerror="this.onerror=null;this.src='logo.jpg';this.onerror=function(){this.src='Logo.png';this.onerror=function(){this.src='logo.png'}}"></div><div class="splash-loader"></div></div>
+<div class="header"><div class="header-logo"><img src="Logo.jpg" onerror="this.onerror=null;this.src='logo.jpg';this.onerror=function(){this.src='Logo.png';this.onerror=function(){this.src='logo.png'}}"></div><button class="login-btn" id="loginBtn"><span id="loginText">Login</span></button></div>
 <div class="search-wrap"><div class="search-box">🔍<input type="text" placeholder="Search bikes, cars, homes..." id="searchInput"></div></div>
-<div class="banner-wrap" id="bannerWrap"><div class="banner"><div class="banner-text"><h3>Find Anything in Sri Lanka</h3><p>MyLanka.lk - Trusted Marketplace</p></div><div style="font-size:60px;opacity:.3;position:absolute;right:20px">🇱🇰</div></div></div>
+<div class="banner-wrap" id="bannerWrap"><div class="banner"><div><h3>Find Anything in Sri Lanka</h3><p>MyLanka.lk - Trusted Marketplace</p></div></div></div>
 <div class="categories"><div class="cat-list">
 <div class="cat-item active" data-cat="all" onclick="filterCat('all')"><div class="cat-icon">🏠</div><p>All</p></div>
 <div class="cat-item" data-cat="vehicle" onclick="filterCat('vehicle')"><div class="cat-icon">🏍️</div><p>Vehicle</p></div>
@@ -37,128 +40,47 @@ body{background:#f5f5f5}
 <div class="cat-item" data-cat="home" onclick="filterCat('home')"><div class="cat-icon">🏡</div><p>Home</p></div>
 <div class="cat-item" data-cat="property" onclick="filterCat('property')"><div class="cat-icon">🏘️</div><p>Property</p></div>
 </div></div>
-<div class="products" id="productsArea">
-<div class="sec-title"><span id="secName">Fresh Recommendations</span><span id="count" style="color:#ff6a00;font-size:13px"></span></div>
-<div class="grid" id="productGrid"></div>
-</div>
+<div class="products" id="productsArea"><div style="display:flex;justify-content:space-between;margin-bottom:12px;font-weight:700"><span id="secName">Fresh Recommendations</span><span id="count" style="color:#ff6a00"></span></div><div class="grid" id="productGrid"></div></div>
 <div class="swipe-indicator" id="swipeHint"></div>
 <button class="add-btn" id="addBtn">+</button>
-<div class="modal" id="postModal"><div class="modal-box">
-<div class="modal-header"><span>Post Your Ad</span><span onclick="closePost()">✕</span></div>
-<div style="padding:15px">
-<input class="input" id="pTitle" placeholder="Title *"><input class="input" id="pPrice" type="number" placeholder="Price LKR *">
-<select class="input" id="pCat"><option value="vehicle">Vehicle</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option><option value="home">Home</option><option value="property">Property</option></select>
-<input class="input" id="pLoc" placeholder="Location *"><input class="input" id="pPhone" placeholder="Phone *"><textarea class="input" id="pDesc" rows="3" placeholder="Description"></textarea>
-<input class="input" id="pImgFile" type="file" accept="image/*"><img id="pPreview" style="width:100%;height:180px;object-fit:cover;border-radius:12px;margin-top:12px;display:none">
-<button class="btn-main" id="postNowBtn">Post Now - හැමෝටම පේනවා</button>
-<div id="uploadStatus" style="text-align:center;margin-top:10px;font-size:13px;color:#ff6a00;font-weight:700"></div>
+<div class="modal" id="postModal"><div class="modal-box"><div class="modal-header"><span>Post Your Ad</span><span onclick="closePost()">✕</span></div><div style="padding:15px">
+<input class="input" id="pTitle" placeholder="Title *"><input class="input" id="pPrice" type="number" placeholder="Price LKR *"><select class="input" id="pCat"><option value="vehicle">Vehicle</option><option value="electronics">Electronics</option><option value="fashion">Fashion</option><option value="home">Home</option><option value="property">Property</option></select><input class="input" id="pLoc" placeholder="Location *"><input class="input" id="pPhone" placeholder="Phone *"><textarea class="input" id="pDesc" rows="3" placeholder="Description"></textarea>
+<div class="upload-area" onclick="document.getElementById('pImgFile').click()">
+<div style="font-size:38px">📸</div><h4>Beautiful Photo Upload - ලස්සනට</h4><p>Tap to add up to 5 Photos (Min 1, Max 5)<br>First photo is cover - අවම 1ක්, උපරිම 5ක්!</p>
+<input id="pImgFile" type="file" accept="image/*" multiple style="display:none">
+</div>
+<div class="preview-grid" id="previewGrid"></div>
+<div id="photoCount" style="text-align:center;margin-top:8px;font-size:12px;color:#ff6a00;font-weight:700"></div>
+<button class="btn-main" id="postNowBtn">Post Now - හැමෝටම පේනවා</button><div id="uploadStatus" style="text-align:center;margin-top:10px;color:#ff6a00;font-weight:700"></div>
 </div></div></div>
-<div class="view-modal" id="viewModal">
-<div style="padding:12px;display:flex;justify-content:space-between;position:sticky;top:0;background:#fff;border-bottom:1px solid #eee;z-index:10"><span onclick="closeView()" style="font-weight:700">← Back</span><span onclick="closeView()">✕</span></div>
-<div class="view-img"><img id="vImg"></div>
-<div style="padding:15px"><div id="vPrice" style="font-size:24px;font-weight:800;color:#ff6a00"></div><div id="vTitle" style="font-weight:700;margin:8px 0;font-size:18px"></div><div id="vLoc" style="color:#777;font-size:13px"></div><div id="vDesc" style="margin-top:14px;color:#444"></div><div id="vPhone" style="font-weight:800;margin-top:20px;font-size:18px"></div>
-<div style="display:flex;gap:10px;margin-top:18px"><button id="vCall" style="flex:1;background:#00a884;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700">📞 Call Now</button><button id="vWa" style="flex:1;background:#25d366;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700">💬 WhatsApp</button></div>
-</div></div>
+<div class="view-modal" id="viewModal"><div style="padding:12px;display:flex;justify-content:space-between;position:sticky;top:0;background:#fff;border-bottom:1px solid #eee"><span onclick="closeView()">← Back</span><span onclick="closeView()">✕</span></div>
+<div class="view-img-wrap" id="viewImgWrap"><img id="vImg"><div class="view-nav left" onclick="changeViewImg(-1)">‹</div><div class="view-nav right" onclick="changeViewImg(1)">›</div><div class="view-dots" id="viewDots"></div></div>
+<div style="padding:15px"><div id="vPrice" style="font-size:24px;font-weight:800;color:#ff6a00"></div><div id="vTitle" style="font-weight:700;margin:8px 0;font-size:18px"></div><div id="vLoc" style="color:#777"></div><div id="vDesc" style="margin-top:14px;color:#444"></div><div id="vPhone" style="font-weight:800;margin-top:20px;font-size:18px"></div><div style="display:flex;gap:10px;margin-top:18px"><button id="vCall" style="flex:1;background:#00a884;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700">📞 Call Now</button><button id="vWa" style="flex:1;background:#25d366;color:#fff;border:none;padding:14px;border-radius:25px;font-weight:700">💬 WhatsApp</button></div></div></div>
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyBCTh5NJgnhcXec_FMfpvFOuccBLxpHfxQ",
-  authDomain: "mylanka-lk.firebaseapp.com",
-  databaseURL: "https://mylanka-lk-default-rtdb.firebaseio.com",
-  projectId: "mylanka-lk",
-  storageBucket: "mylanka-lk.firebasestorage.app",
-  messagingSenderId: "403802424795",
-  appId: "1:403802424795:web:6736366578096ff129d3fe",
-  measurementId: "G-YK0R1735XH"
-};
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
-const db = firebase.database();
-window.addEventListener('load',()=>{ setTimeout(()=>{ let s=document.getElementById('splash'); s.classList.add('hide'); setTimeout(()=>s.style.display='none',700); },2200); });
-let user=null, allAds=[], cats=['all','vehicle','electronics','fashion','home','property'], catIcons={'all':'🏠','vehicle':'🏍️','electronics':'📱','fashion':'👕','home':'🏡','property':'🏘️'}, curIndex=0, tempBase64=null;
-auth.onAuthStateChanged(u=>{ user=u; document.getElementById('loginText').innerText = u? u.displayName.split(' ')[0] : 'Login'; });
-document.getElementById('loginBtn').onclick = ()=>{
-  if(user){ if(confirm('Logout වෙන්නද?')) auth.signOut().then(()=>location.reload()); return; }
-  const provider = new firebase.auth.GoogleAuthProvider();
-  auth.signInWithPopup(provider).then(res=>alert('Welcome '+res.user.displayName+'! ✅')).catch(e=>alert('Login Error: '+e.message));
-};
-document.getElementById('addBtn').onclick = ()=>{
-  if(!user){ alert('Login වෙන්න මුලින්ම'); document.getElementById('loginBtn').click(); return; }
-  document.getElementById('postModal').classList.add('active');
-};
-function closePost(){ document.getElementById('postModal').classList.remove('active'); }
-function closeView(){ document.getElementById('viewModal').classList.remove('active'); }
-document.getElementById('pImgFile').addEventListener('change',e=>{
-  let file=e.target.files[0]; if(!file) return;
-  let reader=new FileReader();
-  reader.onload=ev=>{
-    let img=new Image();
-    img.onload=()=>{
-      let canvas=document.createElement('canvas');
-      let max=900, w=img.width, h=img.height;
-      if(w>h){ if(w>max){ h*=max/w; w=max; } } else { if(h>max){ w*=max/h; h=max; } }
-      canvas.width=w; canvas.height=h;
-      canvas.getContext('2d').drawImage(img,0,0,w,h);
-      tempBase64=canvas.toDataURL('image/jpeg',0.75);
-      let pr=document.getElementById('pPreview'); pr.src=tempBase64; pr.style.display='block';
-    };
-    img.src=ev.target.result;
-  };
-  reader.readAsDataURL(file);
-});
-document.getElementById('postNowBtn').onclick = async ()=>{
-  let t=document.getElementById('pTitle').value.trim(), pr=document.getElementById('pPrice').value, l=document.getElementById('pLoc').value.trim(), ph=document.getElementById('pPhone').value.trim();
-  if(!t||!pr||!l||!ph||!tempBase64){alert('Title, Price, Location, Phone, Photo ඔක්කොම ඕන');return;}
-  let btn=document.getElementById('postNowBtn'), status=document.getElementById('uploadStatus');
-  btn.disabled=true; btn.innerText='Posting...'; status.innerText='Ad එක save වෙනවා... හැමෝටම පේනවා!';
-  try{
-    await db.ref('ads').push({title:t, price:pr, cat:document.getElementById('pCat').value, location:l, phone:ph, desc:document.getElementById('pDesc').value, img:tempBase64, owner:user.email, ownerName:user.displayName, timestamp: Date.now()});
-    status.innerText='Posted! ✅ හැමෝටම පේනවා!';
-    setTimeout(()=>{ closePost(); btn.disabled=false; btn.innerText='Post Now - හැමෝටම පේනවා'; status.innerText=''; document.getElementById('pTitle').value=''; document.getElementById('pPrice').value=''; document.getElementById('pLoc').value=''; document.getElementById('pPhone').value=''; document.getElementById('pDesc').value=''; document.getElementById('pPreview').style.display='none'; tempBase64=null; },1200);
-  }catch(e){ alert('Error: '+e.message); btn.disabled=false; btn.innerText='Post Now'; }
-};
-db.ref('ads').on('value', snap=>{
-  allAds=[]; const val=snap.val();
-  if(val){ Object.keys(val).forEach(k=>{ allAds.push({...val[k], _key:k}); }); allAds.sort((a,b)=>b.timestamp-a.timestamp); }
-  render();
-});
-function setCategoryByIndex(idx){
-  if(idx<0) idx=0; if(idx>=cats.length) idx=cats.length-1;
-  curIndex=idx; let c=cats[idx];
-  let el=document.querySelector(`.cat-item[data-cat="${c}"]`);
-  document.querySelectorAll('.cat-item').forEach(e=>e.classList.remove('active'));
-  el.classList.add('active'); el.scrollIntoView({behavior:'smooth',inline:'center'});
-  document.getElementById('secName').innerText=c==='all'?'Fresh Recommendations':c.charAt(0).toUpperCase()+c.slice(1);
-  let banner=document.getElementById('bannerWrap');
-  if(c==='all') banner.classList.remove('hide'); else banner.classList.add('hide');
-  let h=document.getElementById('swipeHint'); h.innerText=catIcons[c]+' '+c.toUpperCase(); h.style.display='block'; setTimeout(()=>h.style.display='none',800);
-  render();
-}
-function filterCat(c){ setCategoryByIndex(cats.indexOf(c)); }
-function render(){
- let grid=document.getElementById('productGrid');
- let list=cats[curIndex]==='all'?allAds:allAds.filter(a=>a.cat===cats[curIndex]);
- let s=document.getElementById('searchInput').value.toLowerCase();
- if(s) list=list.filter(a=>a.title.toLowerCase().includes(s));
- document.getElementById('count').innerText=list.length+' Ads';
- if(list.length===0){ grid.innerHTML=`<div style="grid-column:1/3;text-align:center;padding:50px 20px;color:#999"><div style="font-size:40px">📦</div><div style="margin-top:10px;font-weight:700">No ads yet in ${cats[curIndex]}</div><div style="font-size:13px;margin-top:4px">Be the first to post!</div></div>`; return; }
- grid.innerHTML=''; list.forEach((p,i)=>{ let idx=allAds.indexOf(p); grid.innerHTML+=`<div class="card" onclick="openView(${idx})"><div class="card-img"><img src="${p.img}"></div><div class="card-body"><div class="card-title">${p.title}</div><div class="card-price">LKR ${Number(p.price).toLocaleString()}</div><div class="card-loc">📍 ${p.location}</div></div></div>`; });
-}
-function openView(i){
- let p=allAds[i];
- document.getElementById('vImg').src=p.img;
- document.getElementById('vPrice').innerText='LKR '+Number(p.price).toLocaleString();
- document.getElementById('vTitle').innerText=p.title;
- document.getElementById('vLoc').innerText='📍 '+p.location+' - '+p.ownerName;
- document.getElementById('vDesc').innerText=p.desc||'';
- document.getElementById('vPhone').innerText='📞 '+p.phone;
- document.getElementById('vCall').onclick=()=>location.href='tel:'+p.phone;
- document.getElementById('vWa').onclick=()=>{ let num=p.phone.startsWith('0')?'94'+p.phone.substring(1):p.phone; window.open('https://wa.me/'+num,'_blank') };
- document.getElementById('viewModal').classList.add('active');
-}
-document.getElementById('searchInput').addEventListener('input',()=>{ render(); });
-let pStartX=0,pStartY=0; let area=document.getElementById('productsArea');
-area.addEventListener('touchstart',e=>{ pStartX=e.touches[0].clientX; pStartY=e.touches[0].clientY; },{passive:true});
-area.addEventListener('touchend',e=>{ let diffX=pStartX-e.changedTouches[0].clientX, diffY=pStartY-e.changedTouches[0].clientY; if(Math.abs(diffX)>Math.abs(diffY) && Math.abs(diffX)>60){ if(diffX>0) setCategoryByIndex(curIndex+1); else setCategoryByIndex(curIndex-1); } },{passive:true});
+var firebaseConfig={apiKey:"AIzaSyBCTh5NJgnhcXec_FMfpvFOuccBLxpHfxQ",authDomain:"mylanka-lk.firebaseapp.com",databaseURL:"https://mylanka-lk-default-rtdb.firebaseio.com",projectId:"mylanka-lk",storageBucket:"mylanka-lk.firebasestorage.app",messagingSenderId:"403802424795",appId:"1:403802424795:web:6736366578096ff129d3fe"};
+firebase.initializeApp(firebaseConfig);var auth=firebase.auth();var db=firebase.database();
+window.addEventListener('load',function(){setTimeout(function(){var s=document.getElementById('splash');s.classList.add('hide');setTimeout(function(){s.style.display='none'},700);},1800);});
+var user=null,allAds=[],cats=['all','vehicle','electronics','fashion','home','property'],catIcons={'all':'🏠','vehicle':'🏍️','electronics':'📱','fashion':'👕','home':'🏡','property':'🏘️'},curIndex=0,adImages=[],viewImgs=[],viewIdx=0;
+auth.onAuthStateChanged(function(u){user=u;document.getElementById('loginText').innerText=u?u.displayName.split(' ')[0]:'Login';});
+document.getElementById('loginBtn').onclick=function(){if(user){if(confirm('Logout?'))auth.signOut().then(function(){location.reload()});return;}var provider=new firebase.auth.GoogleAuthProvider();auth.signInWithPopup(provider).then(function(res){alert('Welcome '+res.user.displayName)}).catch(function(e){alert(e.message)});};
+document.getElementById('addBtn').onclick=function(){if(!user){alert('Login first');document.getElementById('loginBtn').click();return;}document.getElementById('postModal').classList.add('active');};
+function closePost(){document.getElementById('postModal').classList.remove('active');}function closeView(){document.getElementById('viewModal').classList.remove('active');}
+function renderPreview(){var grid=document.getElementById('previewGrid');grid.innerHTML='';adImages.forEach(function(img,i){grid.innerHTML+='<div class="preview-box"><img src="'+img+'"><div class="del" onclick="removeImg('+i+')">✕</div></div>';});if(adImages.length<5){grid.innerHTML+='<div class="preview-box add-more" onclick="document.getElementById(\'pImgFile\').click()"><div style="font-size:24px">＋</div><div style="font-size:11px">Add More</div></div>';}document.getElementById('photoCount').innerText=adImages.length>0?adImages.length+'/5 Photos Added ✅':'No photos yet 📸 - අවම 1ක් දාන්න';}
+function removeImg(i){adImages.splice(i,1);renderPreview();}
+document.getElementById('pImgFile').addEventListener('change',function(e){var files=e.target.files;var remaining=5-adImages.length;for(var f=0;f<files.length && f<remaining;f++){(function(file){var reader=new FileReader();reader.onload=function(ev){var img=new Image();img.onload=function(){var canvas=document.createElement('canvas');var max=1000,w=img.width,h=img.height;if(w>h){if(w>max){h*=max/w;w=max;}}else{if(h>max){w*=max/h;h=max;}}canvas.width=w;canvas.height=h;canvas.getContext('2d').drawImage(img,0,0,w,h);adImages.push(canvas.toDataURL('image/jpeg',0.75));renderPreview();};img.src=ev.target.result;};reader.readAsDataURL(file);})(files[f]);}e.target.value='';});
+document.getElementById('postNowBtn').onclick=function(){var t=document.getElementById('pTitle').value.trim(),pr=document.getElementById('pPrice').value,l=document.getElementById('pLoc').value.trim(),ph=document.getElementById('pPhone').value.trim();if(!t||!pr||!l||!ph||adImages.length===0){alert('All fields + min 1 Photo required - අවම Photo 1ක්!');return;}var btn=document.getElementById('postNowBtn'),status=document.getElementById('uploadStatus');btn.disabled=true;btn.innerText='Posting '+adImages.length+' Photos...';status.innerText='Saving...';db.ref('ads').push({title:t,price:pr,cat:document.getElementById('pCat').value,location:l,phone:ph,desc:document.getElementById('pDesc').value,img:adImages[0],imgs:adImages,imgCount:adImages.length,owner:user.email,ownerName:user.displayName,timestamp:Date.now()}).then(function(){status.innerText='Posted '+adImages.length+' Photos! ✅';setTimeout(function(){closePost();btn.disabled=false;btn.innerText='Post Now - හැමෝටම පේනවා';status.innerText='';document.getElementById('pTitle').value='';document.getElementById('pPrice').value='';document.getElementById('pLoc').value='';document.getElementById('pPhone').value='';document.getElementById('pDesc').value='';adImages=[];renderPreview();},1200);}).catch(function(e){alert(e.message);btn.disabled=false;});};
+db.ref('ads').on('value',function(snap){allAds=[];var val=snap.val();if(val){Object.keys(val).forEach(function(k){var o=val[k];o._key=k;allAds.push(o);});allAds.sort(function(a,b){return b.timestamp-a.timestamp;});}render();});
+function setCategoryByIndex(idx){if(idx<0)idx=0;if(idx>=cats.length)idx=cats.length-1;curIndex=idx;var c=cats[idx];var el=document.querySelector('.cat-item[data-cat="'+c+'"]');document.querySelectorAll('.cat-item').forEach(function(e){e.classList.remove('active');});el.classList.add('active');el.scrollIntoView({behavior:'smooth',inline:'center'});document.getElementById('secName').innerText=c==='all'?'Fresh Recommendations':c;var banner=document.getElementById('bannerWrap');if(c==='all')banner.classList.remove('hide');else banner.classList.add('hide');var h=document.getElementById('swipeHint');h.innerText=catIcons[c]+' '+c.toUpperCase();h.style.display='block';setTimeout(function(){h.style.display='none'},800);render();}
+function filterCat(c){setCategoryByIndex(cats.indexOf(c));}
+function render(){var grid=document.getElementById('productGrid');var list=cats[curIndex]==='all'?allAds:allAds.filter(function(a){return a.cat===cats[curIndex];});var s=document.getElementById('searchInput').value.toLowerCase();if(s)list=list.filter(function(a){return a.title.toLowerCase().includes(s);});document.getElementById('count').innerText=list.length+' Ads';if(list.length===0){grid.innerHTML='<div style="grid-column:1/3;text-align:center;padding:40px;color:#999">No ads in '+cats[curIndex]+'</div>';return;}grid.innerHTML='';list.forEach(function(p){var idx=allAds.indexOf(p);var cnt=p.imgs?p.imgs.length:(p.imgCount||1);var badge=cnt>1?'<div class="img-count">📸 '+cnt+'</div>':'';grid.innerHTML+='<div class="card" onclick="openView('+idx+')"><div class="card-img"><img src="'+(p.imgs?p.imgs[0]:p.img)+'">'+badge+'</div><div class="card-body"><div class="card-title">'+p.title+'</div><div class="card-price">LKR '+Number(p.price).toLocaleString()+'</div><div class="card-loc">📍 '+p.location+'</div></div></div>';});}
+function openView(i){var p=allAds[i];viewImgs=p.imgs?p.imgs:[p.img];viewIdx=0;showViewImg();document.getElementById('vPrice').innerText='LKR '+Number(p.price).toLocaleString();document.getElementById('vTitle').innerText=p.title;document.getElementById('vLoc').innerText='📍 '+p.location+' - '+p.ownerName;document.getElementById('vDesc').innerText=p.desc||'';document.getElementById('vPhone').innerText='📞 '+p.phone;document.getElementById('vCall').onclick=function(){location.href='tel:'+p.phone;};document.getElementById('vWa').onclick=function(){var num=p.phone.startsWith('0')?'94'+p.phone.substring(1):p.phone;window.open('https://wa.me/'+num,'_blank');};document.getElementById('viewModal').classList.add('active');}
+function showViewImg(){document.getElementById('vImg').src=viewImgs[viewIdx];var dots=document.getElementById('viewDots');dots.innerHTML='';viewImgs.forEach(function(_,i){dots.innerHTML+='<div class="dot '+(i===viewIdx?'active':'')+'" onclick="goViewImg('+i+')"></div>';});}
+function changeViewImg(dir){viewIdx+=dir;if(viewIdx<0)viewIdx=viewImgs.length-1;if(viewIdx>=viewImgs.length)viewIdx=0;showViewImg();}
+function goViewImg(i){viewIdx=i;showViewImg();}
+document.getElementById('searchInput').addEventListener('input',function(){render();});
+var pStartX=0;var area=document.getElementById('productsArea');area.addEventListener('touchstart',function(e){pStartX=e.touches[0].clientX;},{passive:true});area.addEventListener('touchend',function(e){var diffX=pStartX-e.changedTouches[0].clientX;if(Math.abs(diffX)>60){if(diffX>0)setCategoryByIndex(curIndex+1);else setCategoryByIndex(curIndex-1);}}, {passive:true});
+var vpStartX=0;var vWrap=document.getElementById('viewImgWrap');vWrap.addEventListener('touchstart',function(e){vpStartX=e.touches[0].clientX;},{passive:true});vWrap.addEventListener('touchend',function(e){var d=vpStartX-e.changedTouches[0].clientX;if(Math.abs(d)>50){if(d>0)changeViewImg(1);else changeViewImg(-1);}}, {passive:true});
+renderPreview();
 </script>
 </body>
 </html>
